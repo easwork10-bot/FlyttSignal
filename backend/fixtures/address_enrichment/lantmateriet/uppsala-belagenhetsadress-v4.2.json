@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::3006"
+    }
+  },
+  "bbox": [648120.25, 6639250.5, 648120.25, 6639250.5],
+  "features": [
+    {
+      "type": "Feature",
+      "id": "11111111-2222-4333-8444-555555555555",
+      "bbox": [648120.25, 6639250.5, 648120.25, 6639250.5],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [648120.25, 6639250.5]
+      },
+      "properties": {
+        "objektidentitet": "11111111-2222-4333-8444-555555555555",
+        "adressplatsattribut": {
+          "objektidentitet": "11111111-2222-4333-8444-555555555555",
+          "objektversion": 1,
+          "versionGiltigFran": "2026-08-01T10:00:00+02:00",
+          "adressplatsbeteckning": {
+            "adressplatsnummer": "12",
+            "avvikerFranStandarden": false
+          },
+          "adressplatstyp": "Gatuadressplats",
+          "insamlingslage": "Ingång",
+          "statusForBelagenhetsadress": "Gällande",
+          "objektstatus": "Gällande",
+          "postnummer": 75320,
+          "postort": "Uppsala"
+        },
+        "adressomrade": {
+          "objektidentitet": "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+          "objektversion": 1,
+          "versionGiltigFran": "2026-08-01T10:00:00+02:00",
+          "faststalltNamn": "Testgatan",
+          "ortid": "testgatan-uppsala",
+          "adressomradestyp": "Gatuadressområde",
+          "objektstatus": "Gällande",
+          "kommundel": {
+            "objektidentitet": "99999999-8888-4777-8666-555555555555",
+            "objektversion": 1,
+            "versionGiltigFran": "2026-08-01T10:00:00+02:00",
+            "faststalltNamn": "Uppsala",
+            "ortid": "uppsala",
+            "objektstatus": "Gällande",
+            "kommun": {
+              "kommunkod": "0380",
+              "kommunnamn": "Uppsala"
+            }
+          }
+        },
+        "registerenhetsreferens": {
+          "objektidentitet": "33333333-4444-4555-8666-777777777777",
+          "beteckning": "UPPSALA TEST 1:1",
+          "typ": "Fastighet"
+        }
+      }
+    }
+  ]
+}

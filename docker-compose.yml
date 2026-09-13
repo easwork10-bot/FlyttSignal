@@ -1,0 +1,103 @@
+name: flyttsignal
+
+x-backend-environment: &backend-environment
+  DATABASE_URL: postgresql+psycopg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.5
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports: ["${POSTGRES_PORT:-5432}:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  migrate:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    environment:
+      <<: *backend-environment
+    command: ["alembic", "-c", "alembic.ini", "upgrade", "head"]
+    depends_on:
+      postgres: { condition: service_healthy }
+  api:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    restart: unless-stopped
+    environment:
+      <<: *backend-environment
+    command: ["uvicorn", "flyttsignal.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["${API_PORT:-8000}:8000"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  worker:
+    build: { context: ., dockerfile: backend/Dockerfile }
+    restart: unless-stopped
+    environment:
+      <<: *backend-environment
+      UPPSALA_BOSTADSFORMEDLING_LIVE_ENABLED: ${UPPSALA_BOSTADSFORMEDLING_LIVE_ENABLED:-false}
+      UPPSALA_BOSTADSFORMEDLING_LISTING_LIFECYCLE_ENABLED: ${UPPSALA_BOSTADSFORMEDLING_LISTING_LIFECYCLE_ENABLED:-false}
+      UPPSALA_BOSTADSFORMEDLING_LISTING_LIFECYCLE_GRACE_RUNS: ${UPPSALA_BOSTADSFORMEDLING_LISTING_LIFECYCLE_GRACE_RUNS:-2}
+      UPPSALA_BOSTADSFORMEDLING_GRAPHQL_URL: ${UPPSALA_BOSTADSFORMEDLING_GRAPHQL_URL:-https://www.bostad.uppsala.se/mypages/api}
+      UPPSALA_BOSTADSFORMEDLING_USER_AGENT: ${UPPSALA_BOSTADSFORMEDLING_USER_AGENT:-FlyttSignal/0.4 UBF-public-listings}
+      UPPSALA_BOSTADSFORMEDLING_MAX_ITEMS: ${UPPSALA_BOSTADSFORMEDLING_MAX_ITEMS:-500}
+      UPPSALA_BOSTADSFORMEDLING_TIMEOUT_SECONDS: ${UPPSALA_BOSTADSFORMEDLING_TIMEOUT_SECONDS:-30}
+      UPPSALA_BOSTADSFORMEDLING_DETAIL_ENABLED: ${UPPSALA_BOSTADSFORMEDLING_DETAIL_ENABLED:-false}
+      UPPSALA_BOSTADSFORMEDLING_DETAIL_CONCURRENCY: ${UPPSALA_BOSTADSFORMEDLING_DETAIL_CONCURRENCY:-4}
+      HEIMSTADEN_LIVE_ENABLED: ${HEIMSTADEN_LIVE_ENABLED:-false}
+      HEIMSTADEN_UPPSALA_URL: ${HEIMSTADEN_UPPSALA_URL:-https://heimstaden.com/se/sok-lagenhet/?text=Uppsala}
+      HEIMSTADEN_USER_AGENT: ${HEIMSTADEN_USER_AGENT:-FlyttSignal/0.3 Heimstaden-Uppsala-listings}
+      HEIMSTADEN_MAX_ITEMS: ${HEIMSTADEN_MAX_ITEMS:-25}
+      HOMEQ_PUBLIC_LIVE_ENABLED: ${HOMEQ_PUBLIC_LIVE_ENABLED:-false}
+      HOMEQ_PUBLIC_SEARCH_API_URL: ${HOMEQ_PUBLIC_SEARCH_API_URL:-https://www.homeq.se/api/v3/search}
+      HOMEQ_PUBLIC_USER_AGENT: ${HOMEQ_PUBLIC_USER_AGENT:-FlyttSignal/0.5 HomeQ-Uppsala-public-listings}
+      HOMEQ_PUBLIC_MAX_ITEMS: ${HOMEQ_PUBLIC_MAX_ITEMS:-100}
+      HOMEQ_PUBLIC_PAGE_SIZE: ${HOMEQ_PUBLIC_PAGE_SIZE:-10}
+      HOMEQ_PUBLIC_CONCURRENCY: ${HOMEQ_PUBLIC_CONCURRENCY:-4}
+      HOMEQ_PUBLIC_TIMEOUT_SECONDS: ${HOMEQ_PUBLIC_TIMEOUT_SECONDS:-30}
+      HSB_PUBLIC_LIVE_ENABLED: ${HSB_PUBLIC_LIVE_ENABLED:-false}
+      HSB_PUBLIC_UPPSALA_URL: ${HSB_PUBLIC_UPPSALA_URL:-https://www.hsb.se/sok-bostad/sok-hyresratter/uppsala/}
+      HSB_PUBLIC_USER_AGENT: ${HSB_PUBLIC_USER_AGENT:-FlyttSignal/0.5 HSB-Uppsala-public-listings}
+      HSB_PUBLIC_MAX_ITEMS: ${HSB_PUBLIC_MAX_ITEMS:-50}
+      HSB_PUBLIC_TIMEOUT_SECONDS: ${HSB_PUBLIC_TIMEOUT_SECONDS:-30}
+      WORKER_POLL_SECONDS: ${WORKER_POLL_SECONDS:-30}
+      RENTAL_SIGNAL_SHADOW_ENABLED: ${RENTAL_SIGNAL_SHADOW_ENABLED:-false}
+      RENTAL_LISTING_REVISIONS_ENABLED: "true"
+      RENTAL_SIGNAL_INFERENCE_ENABLED: "true"
+      SCB_LIVE_ENABLED: ${SCB_LIVE_ENABLED:-false}
+      SCB_API_BASE_URL: ${SCB_API_BASE_URL:-https://api.scb.se/OV0104/v2beta/api/v2}
+      SCB_USER_AGENT: ${SCB_USER_AGENT:-FlyttSignal/0.2 SCB-benchmark-adapter}
+      LANTMATERIET_LIVE_ENABLED: ${LANTMATERIET_LIVE_ENABLED:-false}
+      LANTMATERIET_API_BASE_URL: ${LANTMATERIET_API_BASE_URL:-https://api-ver.lantmateriet.se/distribution/produkter/belagenhetsadress/v4.2}
+      LANTMATERIET_TOKEN_URL: ${LANTMATERIET_TOKEN_URL:-https://apimanager-ver.lantmateriet.se/oauth2/token}
+      LANTMATERIET_CLIENT_ID: ${LANTMATERIET_CLIENT_ID:-}
+      LANTMATERIET_CLIENT_SECRET: ${LANTMATERIET_CLIENT_SECRET:-}
+      LANTMATERIET_USER_AGENT: ${LANTMATERIET_USER_AGENT:-FlyttSignal/0.2 Lantmateriet-address-enrichment}
+      UPPSALA_OPEN_DATA_LIVE_ENABLED: ${UPPSALA_OPEN_DATA_LIVE_ENABLED:-false}
+      UPPSALA_OPEN_DATA_API_BASE_URL: ${UPPSALA_OPEN_DATA_API_BASE_URL:-https://kartportal.uppsala.se/mapping/rest/services/iOpenData/OpenData_Byggnader/MapServer/1}
+      UPPSALA_OPEN_DATA_USER_AGENT: ${UPPSALA_OPEN_DATA_USER_AGENT:-FlyttSignal/0.2 Uppsala-open-data-buildings}
+      UPPSALA_OPEN_DATA_MAX_FEATURES: ${UPPSALA_OPEN_DATA_MAX_FEATURES:-100}
+    command: ["python", "-m", "flyttsignal.worker.main"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+  web:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args: { NEXT_PUBLIC_API_BASE_URL: "${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000/api}" }
+    ports: ["${WEB_PORT:-3000}:3000"]
+    depends_on:
+      api: { condition: service_healthy }
+volumes:
+  postgres_data:

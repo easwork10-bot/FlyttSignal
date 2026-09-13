@@ -1,0 +1,94 @@
+{
+  "version": "2.0",
+  "class": "dataset",
+  "label": "Flyttningar efter region, ålder, kön och år",
+  "source": "SCB",
+  "updated": "2026-02-24T07:00:00Z",
+  "note": [
+    "Från och med referensåret 2025 och framåt är en liten kontrollerad slumpmässig osäkerhet införd i samtliga redovisade uppgifter. Osäkerheten har tillförts för att skydda enskilda personer så att ingen riskerar att röjas i statistiken. Till följd av detta så är inte alltid de redovisade totalerna lika med summan av deras redovisade delar."
+  ],
+  "role": {
+    "time": ["Tid"],
+    "metric": ["ContentsCode"]
+  },
+  "id": ["Region", "Alder", "Kon", "ContentsCode", "Tid"],
+  "size": [1, 1, 1, 9, 1],
+  "dimension": {
+    "Region": {
+      "label": "region",
+      "category": {
+        "index": {"0380": 0},
+        "label": {"0380": "Uppsala"}
+      }
+    },
+    "Alder": {
+      "label": "ålder",
+      "category": {
+        "index": {"TOT1": 0},
+        "label": {"TOT1": "totalt, samtliga åldrar"}
+      }
+    },
+    "Kon": {
+      "label": "kön",
+      "category": {
+        "index": {"TotSa": 0},
+        "label": {"TotSa": "totalt, samtliga män och kvinnor"}
+      }
+    },
+    "ContentsCode": {
+      "label": "tabellinnehåll",
+      "category": {
+        "index": {
+          "0000086B": 0,
+          "0000086F": 1,
+          "00000869": 2,
+          "00000867": 3,
+          "00000868": 4,
+          "0000086A": 5,
+          "0000086D": 6,
+          "0000086E": 7,
+          "0000086C": 8
+        },
+        "label": {
+          "0000086B": "Inflyttningar",
+          "0000086F": "Utflyttningar",
+          "00000869": "Invandringar",
+          "00000867": "Utvandringar",
+          "00000868": "Flyttningsöverskott",
+          "0000086A": "Invandringsöverskott",
+          "0000086D": "Inrikes inflyttningar",
+          "0000086E": "Inrikes utflyttningar",
+          "0000086C": "Inrikes flyttningsöverskott"
+        },
+        "unit": {
+          "0000086B": {"base": "antal", "decimals": 0},
+          "0000086F": {"base": "antal", "decimals": 0},
+          "00000869": {"base": "antal", "decimals": 0},
+          "00000867": {"base": "antal", "decimals": 0},
+          "00000868": {"base": "antal", "decimals": 0},
+          "0000086A": {"base": "antal", "decimals": 0},
+          "0000086D": {"base": "antal", "decimals": 0},
+          "0000086E": {"base": "antal", "decimals": 0},
+          "0000086C": {"base": "antal", "decimals": 0}
+        }
+      }
+    },
+    "Tid": {
+      "label": "år",
+      "category": {
+        "index": {"2025": 0},
+        "label": {"2025": "2025"}
+      }
+    }
+  },
+  "extension": {
+    "px": {
+      "tableid": "TAB6640",
+      "official-statistics": true,
+      "copyright": false,
+      "language": "sv",
+      "aggregallowed": false
+    }
+  },
+  "value": [16319, 15487, 3055, 2483, 832, 572, 13267, 13005, 262]
+}

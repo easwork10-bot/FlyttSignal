@@ -1,0 +1,7 @@
+[
+  {"source_item_id":"partner-001","address":"Testgatan 12","city":"Uppsala","municipality_code":"0380","rooms":3,"area_m2":74.2,"available_from":"2026-09-20","listed_at":"2026-08-26","property_type":"rental","new_construction":false,"latitude":59.8586,"longitude":17.6389},
+  {"source_item_id":"partner-002","address":"Exempelallén 18","city":"Uppsala","municipality_code":"0380","rooms":null,"area_m2":null,"available_from":"2026-10-15","listed_at":"2026-08-26","property_type":"rental","new_construction":false,"latitude":59.85,"longitude":17.62},
+  {"source_item_id":"partner-003","address":"Testgatan 12","city":"Uppsala","municipality_code":"0380","unit_identifier":"1202","rooms":4,"area_m2":92,"available_from":"2026-11-01","listed_at":"2026-08-26","property_type":"rental","new_construction":false,"latitude":59.8586,"longitude":17.6389},
+  {"source_item_id":"partner-004","address":"Partnergatan 1","city":"Uppsala","municipality_code":"0380","unit_identifier":"1001","rooms":2,"area_m2":44,"available_from":"2026-10-10","listed_at":"2026-08-26","property_type":"rental","new_construction":false,"latitude":59.861,"longitude":17.655},
+  {"source_item_id":"partner-005","address":"Fiktivvägen 4 A","city":"Uppsala","municipality_code":"0380","rooms":2,"area_m2":52.4,"available_from":"2026-10-01","listed_at":"2026-08-26","property_type":"rental","new_construction":false,"latitude":59.864,"longitude":17.645}
+]

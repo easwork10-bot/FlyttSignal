@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --background: 248 249 250;
+  --foreground: 33 37 41;
+  --card: 255 255 255;
+  --card-foreground: 33 37 41;
+  --primary: 21 151 184;
+  --primary-foreground: 255 255 255;
+  --secondary: 233 236 239;
+  --secondary-foreground: 73 80 87;
+  --muted: 241 243 245;
+  --muted-foreground: 108 117 125;
+  --border: 222 226 230;
+  --input: 206 212 218;
+  --success: 47 133 90;
+  --warning: 181 107 24;
+  --destructive: 190 62 62;
+}
+* { border-color: rgb(var(--border)); }
+html { background: rgb(var(--background)); }
+body {
+  @apply m-0 min-h-screen bg-background text-foreground antialiased;
+}
+::selection { @apply bg-primary/20 text-foreground; }
+.label { @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground; }
+.score { @apply inline-flex min-w-16 justify-center rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 font-semibold tabular-nums text-primary; }
+.maplibregl-map { @apply font-sans; }
+.maplibregl-ctrl-group { @apply overflow-hidden border border-border bg-card shadow-lg; }
+.maplibregl-ctrl-group button { @apply bg-card; }
+.maplibregl-ctrl-group button + button { @apply border-t border-border; }
+.maplibregl-ctrl-attrib { @apply bg-card/90 text-[10px] text-muted-foreground; }
+.maplibregl-ctrl-attrib a { @apply text-secondary-foreground; }
+.signal-map-marker {
+  @apply size-[18px] cursor-pointer rounded-full border-2 border-card bg-primary shadow-lg transition-[width,height,background-color,border-color];
+}
+.signal-map-marker:hover { @apply bg-primary/80; }
+.signal-map-marker[data-selected="true"] { @apply size-6 border-card bg-success; }

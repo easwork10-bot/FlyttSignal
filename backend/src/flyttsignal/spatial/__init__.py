@@ -1,0 +1,1 @@
+"""Score-neutral spatial context."""

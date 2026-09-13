@@ -1,0 +1,891 @@
+version: 1
+registry_scope: "Milestone 2 source research; not runtime configuration"
+reviewed_at: 2026-08-27
+reviewed_by: "FlyttSignal engineering"
+
+sources:
+  - source_key: uppsala-open-data
+    name: Uppsala Open Data
+    owner: Uppsala kommun
+    scope: municipal
+    cities: [uppsala]
+    roles: [CONTEXT, ENRICHMENT, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: buildings-feature-layer
+        url: https://kartportal.uppsala.se/mapping/rest/services/iOpenData/OpenData_Byggnader/MapServer/1
+        access_method: PUBLIC_ARCGIS_FEATURE_SERVICE
+        parser_type: GEOJSON
+        requires_auth: false
+        requires_contract: false
+        rate_limits: "maxRecordCount 1000; service-wide limit not published"
+        dataset: "Byggnader; ArcGIS item fbceff62d4b3439c88f118ee67e796c9, layer 1"
+        assessment:
+          purpose: "Observe non-personal spatial building changes in Uppsala"
+          data_use: "Store selected building polygons, coded attributes and provenance as score-neutral context"
+          legal_status: CLEAR
+          privacy_class: NON_PERSONAL
+          redistribution_rights: ALLOWED
+          technical_status: GOOD
+          signal_value: LOW
+          expected_freshness: "Actively updated; no published SLA"
+          recommended_poll_interval: DISABLED_UNTIL_FIXTURE_AND_BOUNDED_LIVE_VERIFICATION
+          expected_volume: "124118 total and 40827 residential features observed 2026-08-28"
+          dedupe_keys: ["dataset id + OBJECTID + canonical payload hash; OBJECTID lifecycle unresolved"]
+          decision: GO
+          decision_reason: "Fixture and bounded five-feature live verification are complete and score-neutral; recurring collection stays disabled while identifier and cursor stability are observed."
+          unresolved_questions: ["OBJECTID stability across republishing", "Service-wide rate limit and SLA", "MODIFICATIONDATE cursor reliability"]
+          review_depth: deep
+          reviewed_at: 2026-08-28
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2027-02-28
+          evidence_urls: ["https://www.uppsala.se/kommun-och-politik/statistik-om-uppsala/psi-data/", "https://data-uppsala-kommun.opendata.arcgis.com/api/search/definition/", "https://data-uppsala-kommun.opendata.arcgis.com/items/fbceff62d4b3439c88f118ee67e796c9", "https://kartportal.uppsala.se/mapping/rest/services/iOpenData/OpenData_Byggnader/MapServer/1"]
+          review_path: "../source-reviews/uppsala-open-data/2026-08-27.md"
+
+  - source_key: scb-pxweb
+    name: SCB Statistikdatabasen
+    owner: Statistikmyndigheten SCB
+    scope: national
+    cities: [uppsala]
+    roles: [BENCHMARK, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: pxweb-api-v2
+        url: https://www.scb.se/vara-tjanster/oppna-data/pxwebapi/
+        access_method: REST_API
+        parser_type: JSON
+        requires_auth: false
+        requires_contract: false
+        api_documentation_url: https://www.scb.se/vara-tjanster/oppna-data/pxwebapi/
+        rate_limits: "150000 cells/request; 30 calls/10 seconds/IP"
+        dataset: "TAB6640: Uppsala municipal migration totals"
+        assessment:
+          purpose: "Benchmark Uppsala migration and housing context"
+          data_use: "Store aggregated municipal statistics"
+          legal_status: CLEAR
+          privacy_class: NON_PERSONAL
+          redistribution_rights: ALLOWED
+          technical_status: GOOD
+          signal_value: NONE
+          expected_freshness: TABLE_SPECIFIC
+          recommended_poll_interval: WEEKLY_OR_SLOWER
+          expected_volume: LOW
+          dedupe_keys: ["table id", region, period, dimensions]
+          decision: GO
+          decision_reason: "Best low-risk adapter for proving real HTTP and operational controls; not a property signal."
+          unresolved_questions: []
+          review_depth: deep
+          reviewed_at: 2026-08-27
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2027-02-27
+          evidence_urls: ["https://www.scb.se/vara-tjanster/oppna-data/pxwebapi/", "https://www.statistikdatabasen.scb.se/pxweb/sv/ssd/START__BE__BE0101__BE0101J/"]
+          review_path: "../source-reviews/scb-pxweb/2026-08-27.md"
+
+  - source_key: lantmateriet-belagenhetsadress
+    name: Belägenhetsadress Direkt
+    owner: Lantmäteriet
+    scope: national
+    cities: [uppsala]
+    roles: [ENRICHMENT, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: direct-api-v4-2
+        url: https://geotorget.lantmateriet.se/geodataprodukter/belagenhetsadress-direkt-api
+        access_method: CONTRACTED_REST_API
+        parser_type: JSON_OR_XML
+        requires_auth: true
+        requires_contract: true
+        api_documentation_url: https://geotorget.lantmateriet.se/dokument/projects/belaegenhetsadress-direkt/released/4.2/Teknisk-beskrivning.html
+        rate_limits: "250 IDs per batch; reference maxHits 500; service-wide request rate not publicly documented in reviewed sources"
+        dataset: Belägenhetsadresser
+        assessment:
+          purpose: "Canonical address resolution"
+          data_use: "Validate permitted Uppsala addresses and link them to register units using selected basinformation and berorkrets fields"
+          legal_status: NEEDS_PERMISSION
+          privacy_class: POTENTIALLY_PERSONAL
+          redistribution_rights: ATTRIBUTION_REQUIRED
+          technical_status: GOOD
+          signal_value: NONE
+          expected_freshness: REAL_TIME_AFTER_REGISTER_UPDATE
+          recommended_poll_interval: DISABLED_UNTIL_FRL_REVIEW_AND_CREDENTIALS
+          expected_volume: MEDIUM
+          dedupe_keys: ["Lantmäteriet address identifier"]
+          decision: WAIT
+          decision_reason: "Fixture-first implementation is complete, but Geotorget requires FRL purpose review before authenticated electronic access; live use remains disabled pending Lantmäteriet's response and credentials."
+          unresolved_questions: ["FRL purpose/access decision", "Service-wide request-rate limit", "Credential lifecycle and verification-environment provisioning"]
+          review_depth: deep
+          reviewed_at: 2026-08-27
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2027-02-27
+          evidence_urls: ["https://geotorget.lantmateriet.se/geodataprodukter/belagenhetsadress-direkt-api", "https://geotorget.lantmateriet.se/dokument/projects/belaegenhetsadress-direkt/released/4.2/%C3%85tkomst-och-leverans.html", "https://geotorget.lantmateriet.se/dokument/projects/belaegenhetsadress-direkt/released/4.2/Teknisk-beskrivning.html", "https://namespace.lantmateriet.se/distribution/produkter/belagenhetsadress/v4.2/belagenhetsadress-4.2.1.yaml", "https://www.lantmateriet.se/sv/geodata/vara-produkter/produktsupport/api-portalen/", "https://www.lantmateriet.se/globalassets/geodata/geodataprodukter/anvandningsvillkor_for_vardefulla_datamangder_pu.pdf"]
+          terms_url: https://www.lantmateriet.se/globalassets/geodata/geodataprodukter/anvandningsvillkor_for_vardefulla_datamangder_pu.pdf
+          terms_checked_at: 2026-08-27
+          terms_snapshot_path: null
+          terms_hash: null
+          terms_version: "Current public PDF checked 2026-08-27; original not archived"
+          review_path: "../source-reviews/lantmateriet-belagenhetsadress/2026-08-27.md"
+
+  - source_key: lantmateriet-byggnad
+    name: Byggnad Direkt
+    owner: Lantmäteriet
+    scope: national
+    cities: [uppsala]
+    roles: [ENRICHMENT, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: direct-api
+        url: https://www.lantmateriet.se/sv/geodata/vara-produkter/produktlista/byggnad-direkt/
+        access_method: CONTRACTED_API
+        dataset: Byggnadsinformation
+        assessment: {purpose: "Property/building enrichment", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: lantmateriet-fastighetsindelning
+    name: Fastighetsindelning
+    owner: Lantmäteriet
+    scope: national
+    cities: [uppsala]
+    roles: [ENRICHMENT, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: download-or-direct
+        url: https://www.lantmateriet.se/sv/geodata/vara-produkter/produktlista/
+        access_method: API_OR_DOWNLOAD
+        dataset: Fastighetsgeometrier
+        assessment: {purpose: "Spatial property matching", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: osm-nominatim
+    name: OpenStreetMap Nominatim public service
+    owner: OpenStreetMap Foundation
+    scope: international
+    cities: [uppsala]
+    roles: [ENRICHMENT]
+    upstream_source_keys: [openstreetmap]
+    interfaces:
+      - interface_key: public-nominatim
+        url: https://operations.osmfoundation.org/policies/nominatim/
+        access_method: PUBLIC_API
+        parser_type: JSON
+        requires_auth: false
+        requires_contract: false
+        rate_limits: "Maximum 1 request/second; stricter recurring bulk guidance"
+        dataset: Geocoding results
+        assessment:
+          purpose: "Recurring production geocoding"
+          data_use: "Cache address-to-coordinate results"
+          legal_status: CLEAR
+          privacy_class: NON_PERSONAL
+          redistribution_rights: ATTRIBUTION_REQUIRED
+          technical_status: CONSTRAINED
+          signal_value: NONE
+          expected_freshness: UNKNOWN
+          recommended_poll_interval: NOT_APPLICABLE
+          expected_volume: MEDIUM
+          dedupe_keys: [normalized_address]
+          decision: REJECT
+          decision_reason: "The community public instance must not become a recurring production dependency."
+          unresolved_questions: ["Choose a contracted provider or separately assess self-hosting"]
+          review_depth: deep
+          reviewed_at: 2026-08-27
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2027-02-27
+          evidence_urls: ["https://operations.osmfoundation.org/policies/nominatim/", "https://www.openstreetmap.org/copyright"]
+          review_path: "../source-reviews/osm-nominatim/2026-08-27.md"
+
+  - source_key: kolada
+    name: Kolada
+    owner: Rådet för främjande av kommunala analyser
+    scope: national
+    cities: [uppsala]
+    roles: [BENCHMARK, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: api-v3
+        url: https://api.kolada.se/v3/docs
+        access_method: REST_API
+        dataset: Kommunala nyckeltal
+        assessment: {purpose: "Municipal benchmark context", legal_status: CLEAR, technical_status: GOOD, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: boverket-energy
+    name: Boverket energideklarationer
+    owner: Boverket
+    scope: national
+    cities: [uppsala]
+    roles: [ENRICHMENT, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-api
+        url: https://www.boverket.se/sv/om-boverket/oppna-data/publikt-api-for-energideklarationer/
+        access_method: PUBLIC_API
+        dataset: Energideklarationsuppgifter
+        assessment: {purpose: "Building enrichment", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: boverket-housing-survey
+    name: Boverkets bostadsmarknadsenkät
+    owner: Boverket
+    scope: national
+    cities: [uppsala]
+    roles: [BENCHMARK]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: open-data
+        url: https://www.boverket.se/sv/om-boverket/oppna-data/bostadsmarknadsenkaten/
+        access_method: DOWNLOAD
+        dataset: Bostadsmarknadsenkäten
+        assessment: {purpose: "Housing-market benchmark", legal_status: CLEAR, technical_status: GOOD, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: uppsala-building-data
+    name: Uppsala lov och byggande
+    owner: Uppsala kommun / Boverket
+    scope: municipal
+    cities: [uppsala]
+    roles: [ENRICHMENT, BENCHMARK]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: open-data-candidate
+        url: https://www.boverket.se/sv/om-boverket/oppna-data/plan-och-byggenkaten/oppna-data-lov-och-byggande/
+        access_method: DOWNLOAD_OR_API
+        dataset: Lov- och byggande
+        assessment: {purpose: "Development context", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: LOW, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: hyresgastforeningen-landlord-directory
+    name: Hyresgästföreningen landlord directory
+    owner: Hyresgästföreningen
+    scope: national
+    cities: [uppsala]
+    roles: [VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: municipality-directory
+        url: https://www.hyresgastforeningen.se/om-oss/hyresvardar/hyresvardar-i-uppsala/
+        access_method: PUBLIC_HTML
+        parser_type: HTML
+        requires_auth: false
+        dataset: Major landlords listed per municipality
+        assessment:
+          purpose: "Audit landlord and source coverage"
+          data_use: "Discover candidate landlord channels; never create availability events"
+          legal_status: UNKNOWN
+          privacy_class: NON_PERSONAL
+          redistribution_rights: UNKNOWN
+          technical_status: GOOD
+          signal_value: NONE
+          decision: INVENTORY
+          decision_reason: "Useful discovery directory, but it is not a current-vacancy feed and every distribution route must be verified first-party."
+          review_depth: deep
+          reviewed_at: 2026-08-28
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2026-11-28
+          evidence_urls: ["https://www.hyresgastforeningen.se/om-oss/hyresvardar/hyresvardar/", "https://www.hyresgastforeningen.se/om-oss/hyresvardar/hyresvardar-i-uppsala/"]
+          review_path: "../source-reviews/rental-sources/2026-08-28.md"
+
+  - source_key: uppsala-bostadsformedling
+    name: Uppsala Bostadsförmedling
+    owner: Uppsala Bostadsförmedling AB
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listing-web
+        url: https://www.bostad.uppsala.se/mypages/app/
+        access_method: PUBLIC_GRAPHQL_WITH_KILL_SWITCH
+        parser_type: JSON
+        requires_auth: false
+        requires_contract: false
+        rate_limits: UNKNOWN
+        dataset: Public rental listings
+        assessment:
+          purpose: "Observe rental-listing lifecycle"
+          data_use: "Store public property listing fields and lifecycle observations"
+          legal_status: UNKNOWN
+          privacy_class: NON_PERSONAL
+          redistribution_rights: UNKNOWN
+          technical_status: GOOD
+          signal_value: VERY_HIGH
+          expected_freshness: DAILY
+          recommended_poll_interval: DISABLED_BY_DEFAULT
+          expected_volume: VOLATILE_HUNDREDS
+          dedupe_keys: [object_number, canonical_listing_url]
+          decision: GO_CONTROLLED
+          decision_reason: "The exact parameterless anonymous GraphQL operation used by the public application returned 290 objects matching the UI total on 2026-08-29. All IDs were unique and 189 objects were explicitly labelled Uppsala. The v2 rule fails closed on missing regions, global duplicate IDs, count mismatch or cap."
+          unresolved_questions: ["Published request limit and integration SLA", "Three consecutive scheduled COMPLETE runs before lifecycle"]
+          review_depth: deep
+          reviewed_at: 2026-08-29
+          snapshot_integrity: per_run_complete_for_public_uppsala_region_subset
+          completeness_rule_version: ubf-public-graphql-v2
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2026-11-28
+          evidence_urls: ["https://www.bostad.uppsala.se/mypages/app/", "https://www.bostad.uppsala.se/mypages/api", "https://www.bostad.uppsala.se/vagen-till-bostad/fragor-och-svar", "https://www.uppsalahem.se/bostader/vill-du-bo-hos-oss/", "https://www.rikshem.se/bo-hos-oss/bostadssokande/"]
+          review_path: "../source-reviews/uppsala-bostadsformedling/2026-08-28.md"
+
+  - source_key: uppsalahem
+    name: Uppsalahem
+    owner: Uppsalahem AB
+    scope: municipal
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [uppsala-bostadsformedling]
+    interfaces:
+      - interface_key: public-website
+        url: https://www.uppsalahem.se/
+        access_method: PUBLIC_HTML_OR_SYNDICATION
+        dataset: Rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, technical_status: GOOD, signal_value: HIGH, decision: REJECT, decision_reason: "Uppsalahem directs all available apartments to Uppsala Bostadsförmedling; a separate collector would duplicate the selected upstream source.", review_depth: deep, reviewed_at: 2026-08-28}
+
+  - source_key: rikshem
+    name: Rikshem Uppsala/Knivsta
+    owner: Rikshem AB
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [uppsala-bostadsformedling]
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.bostad.uppsala.se/for-hyresvardar/vara-hyresvardar/rikshem
+        access_method: SYNDICATED_TO_BROKER
+        dataset: Rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, privacy_class: NON_PERSONAL, technical_status: GOOD, signal_value: HIGH, decision: REJECT, decision_reason: "Rikshem and the broker confirm that Uppsala/Knivsta letting is handled by Uppsala Bostadsförmedling; a verified fixture object now exercises Rikshem provenance through that existing source.", review_depth: deep, reviewed_at: 2026-08-28, review_path: "../source-reviews/rental-sources/2026-08-28-rikshem-newsec-stena.md"}
+
+  - source_key: heimstaden
+    name: Heimstaden Uppsala
+    owner: Heimstaden Sweden AB
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://heimstaden.com/se/lediga-lagenheter-uppsala/
+        access_method: PUBLIC_HTML
+        dataset: Rental availability
+        assessment: {purpose: "Observe public non-personal rental facts", data_use: "Fixture and controlled bounded parsing; recurring polling disabled", legal_status: UNKNOWN, privacy_class: NON_PERSONAL, redistribution_rights: UNKNOWN, technical_status: GOOD, signal_value: VERY_HIGH, expected_freshness: HOURLY, recommended_poll_interval: DISABLED_UNTIL_REVIEWED, dedupe_keys: [compound_object_id, canonical_listing_url], decision: WAIT, decision_reason: "Fixture and one controlled live parser run passed. The landing page is not proven complete, cannot emit removals, and recurring reuse remains deliberately disabled.", unresolved_questions: ["Explicit recurring-use position", "Conservative production poll interval", "Complete inventory interface"], review_depth: deep, reviewed_at: 2026-08-28, reviewed_by: "FlyttSignal engineering", review_expires_at: 2026-11-28, evidence_urls: ["https://heimstaden.com/se/lediga-lagenheter-uppsala/", "https://heimstaden.com/robots.txt"], review_path: "../source-reviews/heimstaden/2026-08-28.md"}
+
+  - source_key: victoriahem
+    name: Victoriahem Uppsala
+    owner: Victoriahem AB
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [uppsala-bostadsformedling]
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.victoriahem.se/har-finns-vi/uppsala/
+        access_method: PUBLIC_HTML_OR_AUTHENTICATED_PORTAL
+        dataset: Rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, technical_status: GOOD, signal_value: HIGH, decision: REJECT, decision_reason: "Victoriahem states that all available Uppsala apartments are mediated through Uppsala Bostadsförmedling; a separate collector would duplicate the selected source.", review_depth: deep, reviewed_at: 2026-08-28}
+
+  - source_key: hsb-uppsala
+    name: HSB Uppsala
+    owner: HSB Uppsala
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [homeq]
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.hsb.se/sok-bostad/sok-hyresratter/uppsala/
+        access_method: PUBLIC_HTML
+        dataset: Rental availability
+        assessment:
+          purpose: "Observe rental-listing lifecycle"
+          legal_status: UNKNOWN
+          privacy_class: NON_PERSONAL
+          technical_status: GOOD
+          signal_value: HIGH
+          decision: CONTROLLED_LIVE_DEVELOPMENT
+          decision_reason: "HSB exposes server-rendered county listing and property cards. A bounded live adapter stores only direct Uppsala-municipality identity, address, rent, rooms, area, dates and HSB provenance. Per-run completeness requires county and municipality listing counts to match public property-card availability totals, with no pagination or cap."
+          review_depth: deep
+          reviewed_at: 2026-08-29
+          data_mode: live
+          snapshot_integrity: per_run_complete_for_direct_uppsala_municipality_scope
+          completeness_rule_version: hsb-public-html-v2
+          unresolved_questions: ["Three consecutive scheduled COMPLETE runs before any HSB lifecycle", "HSB homes distributed only through HomeQ remain a separate channel"]
+          dedupe_keys: ["HSB property/listing path", "upstream provider"]
+          evidence_urls: ["https://www.hsb.se/sok-bostad/sok-hyresratter/uppsala/", "https://www.hsb.se/uppsala/om-boende/vara-hyresratter/hyreslagenheter-uppsala/"]
+          review_path: "../source-reviews/hsb/2026-08-28.md"
+
+  - source_key: nationsgardarna
+    name: Nationsgårdarna
+    owner: Uppsala nations' housing foundations
+    scope: municipal-student
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: authenticated-listings
+        url: https://www.nationsgardarna.se/
+        access_method: AUTHENTICATED_PORTAL
+        requires_auth: true
+        dataset: Vacancies for eight Uppsala student nations
+        assessment: {purpose: "Observe student-rental lifecycle", legal_status: UNKNOWN, privacy_class: POTENTIALLY_PERSONAL, technical_status: CONSTRAINED, signal_value: VERY_HIGH, decision: WAIT, decision_reason: "Current vacancies require login; use fixtures until a legitimate account scope or partner interface is reviewed.", review_depth: deep, reviewed_at: 2026-08-28}
+
+  - source_key: byggvesta
+    name: ByggVesta Uppsala
+    owner: ByggVesta AB
+    scope: municipal
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: own-queue
+        url: https://minasidor.byggvesta.se/
+        access_method: AUTHENTICATED_PORTAL_OR_PARTNER_FEED
+        requires_auth: true
+        requires_contract: true
+        dataset: Direct rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: NEEDS_PERMISSION, privacy_class: POTENTIALLY_PERSONAL, technical_status: CONSTRAINED, signal_value: MEDIUM, decision: WAIT, decision_reason: "Current first-party instructions require applicant registration/login; the legacy public market hostname no longer resolves. Request an approved feed instead of collecting through an applicant account.", review_depth: deep, reviewed_at: 2026-08-28, review_path: "../source-reviews/byggvesta/2026-08-28.md"}
+
+  - source_key: ikano-bostad
+    name: Ikano Bostad Uppsala
+    owner: Ikano Bostad AB
+    scope: municipal
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [homeq]
+    interfaces:
+      - interface_key: homeq-syndication
+        url: https://www.ikanobostad.se/hyra-bostad/
+        access_method: SYNDICATED_TO_HOMEQ
+        dataset: Rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, privacy_class: NON_PERSONAL, technical_status: GOOD, signal_value: MEDIUM, decision: WAIT, decision_reason: "Ikano distributes rentals through HomeQ and acquired 335 Uppsala rentals on 2026-08-10; verify the Uppsala rollout after acquisition integration.", review_depth: deep, reviewed_at: 2026-08-28}
+
+  - source_key: newsec-uppsala
+    name: Newsec-managed Uppsala housing
+    owner: Newsec Property Asset Management Sweden AB
+    scope: municipal-manager
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [uppsala-bostadsformedling]
+    interfaces:
+      - interface_key: mediated-listings
+        url: https://www.bostad.uppsala.se/for-hyresvardar/vara-hyresvardar/newsec
+        access_method: SYNDICATED_TO_BROKER
+        dataset: Managed rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, privacy_class: NON_PERSONAL, technical_status: GOOD, signal_value: MEDIUM, decision: REJECT, decision_reason: "Newsec-managed Uppsala vacancies are published by Uppsala Bostadsförmedling. Newsec is preserved as manager without inferring property ownership; a separate collector would duplicate the selected source.", review_depth: deep, reviewed_at: 2026-08-28, review_path: "../source-reviews/rental-sources/2026-08-28-rikshem-newsec-stena.md"}
+
+  - source_key: stena-fastigheter-uppsala
+    name: Stena Fastigheter Uppsala
+    owner: Stena Fastigheter AB
+    scope: municipal
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [uppsala-bostadsformedling]
+    interfaces:
+      - interface_key: public-and-internal-distribution
+        url: https://www.stenafastigheter.se/bostader/hyra-bostad/
+        access_method: SYNDICATED_PUBLIC_PLUS_AUTHENTICATED_INTERNAL
+        dataset: Public availability plus current-tenant internal queue
+        assessment: {purpose: "Observe public rental-listing lifecycle", legal_status: UNKNOWN, privacy_class: NON_PERSONAL, technical_status: CONSTRAINED, signal_value: HIGH, decision: REJECT, decision_reason: "Stena confirms that public Uppsala letting uses Uppsala Bostadsförmedling. Its separate Mina sidor internal queue is only for existing tenants and remains out of collection scope.", review_depth: deep, reviewed_at: 2026-08-28, review_path: "../source-reviews/rental-sources/2026-08-28-rikshem-newsec-stena.md"}
+
+  - source_key: riksbyggen-uppsala
+    name: Riksbyggen Uppsala
+    owner: Riksbyggen ekonomisk förening
+    scope: municipal
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [homeq, uppsala-bostadsformedling]
+    interfaces:
+      - interface_key: homeq-and-local-broker
+        url: https://www.riksbyggen.se/bostad/uppsala-lan/uppsala/hyresratter/
+        access_method: SYNDICATED_TO_HOMEQ_OR_LOCAL_BROKER
+        dataset: Rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, privacy_class: NON_PERSONAL, technical_status: GOOD, signal_value: HIGH, decision: WAIT, decision_reason: "Uppsala homes use HomeQ, while some properties also use Uppsala Bostadsförmedling; Lilium explicitly uses both and requires cross-channel deduplication.", review_depth: deep, reviewed_at: 2026-08-28}
+
+  - source_key: balder-uppsala
+    name: Balder Uppsala
+    owner: Fastighets AB Balder
+    scope: municipal
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [homeq]
+    interfaces:
+      - interface_key: homeq-syndication
+        url: https://www.balder.se/lediga-lagenheter/uppsala
+        access_method: SYNDICATED_TO_HOMEQ
+        dataset: Rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, privacy_class: NON_PERSONAL, technical_status: GOOD, signal_value: HIGH, decision: REJECT, decision_reason: "Balder states that all its Uppsala rentals are mediated only through HomeQ; no separate adapter if HomeQ is available.", review_depth: deep, reviewed_at: 2026-08-28}
+
+  - source_key: botrygg
+    name: Botrygg Uppsala
+    owner: Botrygg AB
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: [uppsala-bostadsformedling]
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.botrygg.se/uthyrning/
+        access_method: PUBLIC_HTML_OR_SYNDICATION
+        dataset: Rental availability
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: MEDIUM, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: homeq
+    name: HomeQ
+    owner: HomeQ Technologies AB
+    scope: national
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-uppsala-search
+        url: https://www.homeq.se/search?selectedShapes=urban_area.656%3B95530a7d4e4c6b6775fe60d90d678cd09707fa748d79d93da68aae7188bb1c15%3BUppsala
+        access_method: PUBLIC_SEARCH_REQUEST_AND_DETAIL_BOOTSTRAP
+        parser_type: JSON_AND_NEXT_DATA
+        requires_auth: false
+        requires_contract: false
+        dataset: "Public Uppsala rental cards, project metadata and detail facts"
+        assessment:
+          purpose: "Observe bounded public Uppsala rental listings"
+          data_use: "Store minimal non-personal listing facts and upstream landlord provenance"
+          legal_status: NEEDS_PERMISSION_FOR_RECURRING_USE
+          privacy_class: NON_PERSONAL
+          redistribution_rights: RESTRICTED
+          technical_status: GOOD
+          signal_value: VERY_HIGH
+          expected_freshness: CURRENT_PUBLIC_SEARCH
+          recommended_poll_interval: THREE_HOURS_DEVELOPMENT
+          expected_volume: "26 top-level cards; 53 real individual listings after bounded expansion of two project cards on 2026-08-29"
+          snapshot_integrity: per_run_complete_for_configured_geo_bounds
+          completeness_rule_version: homeq-public-search-v2
+          dedupe_keys: ["HomeQ ID", "project ID", "canonical upstream landlord"]
+          decision: CONTROLLED_LIVE_DEVELOPMENT
+          decision_reason: "The public page's anonymous bounded search and detail bootstrap data are stable enough for development. A run is complete only for the exact configured geo-bounds when cards, project active-ad totals, unique IDs and details reconcile. The adapter excludes descriptions, images and private/account data, caps results, limits concurrency and cannot infer removals in M3.1."
+          unresolved_questions: ["Three consecutive scheduled COMPLETE runs before M3.2", "Long-term supported feed or partner upgrade", "Published rate limits", "Complete removal/lifecycle semantics"]
+          review_depth: deep
+          reviewed_at: 2026-08-28
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2026-11-28
+          evidence_urls: ["https://www.homeq.se/search?selectedShapes=urban_area.656%3B95530a7d4e4c6b6775fe60d90d678cd09707fa748d79d93da68aae7188bb1c15%3BUppsala", "https://www.homeq.se/anvandarvillkor"]
+          review_path: "../source-reviews/homeq/2026-08-28.md"
+      - interface_key: authenticated-api
+        url: https://api.homeq.se/api-docs/
+        access_method: AUTHENTICATED_API
+        parser_type: JSON
+        requires_auth: true
+        requires_contract: true
+        api_documentation_url: https://api.homeq.se/api-docs/
+        rate_limits: UNKNOWN
+        dataset: "Listings capability not yet confirmed"
+        assessment:
+          purpose: "Receive rental-listing lifecycle"
+          data_use: "Store approved listing fields and lifecycle observations"
+          legal_status: NEEDS_PERMISSION
+          privacy_class: POTENTIALLY_PERSONAL
+          redistribution_rights: UNKNOWN
+          technical_status: GOOD
+          signal_value: VERY_HIGH
+          expected_freshness: UNKNOWN
+          recommended_poll_interval: DISABLED_UNTIL_APPROVED
+          expected_volume: UNKNOWN
+          dedupe_keys: ["HomeQ listing identifier"]
+          decision: WAIT
+          decision_reason: "Documented API requires keys; listing-read scope and permitted FlyttSignal use are unconfirmed."
+          unresolved_questions: ["Partner listing read/event endpoint availability", "Contract, retention and redistribution", "Upstream landlord provenance", "Snapshot or cursor lifecycle semantics"]
+          review_depth: deep
+          reviewed_at: 2026-08-27
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2026-11-27
+          evidence_urls: ["https://api.homeq.se/api-docs/", "https://api.homeq.se/api-docs/public", "https://docs-core.homeq.se/"]
+          review_path: "../source-reviews/homeq/2026-08-27.md"
+          access_request_path: "../source-reviews/homeq/access-request-draft.md"
+
+  - source_key: qasa
+    name: Qasa
+    owner: Qasa AB
+    scope: national
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://qasa.com/se/sv/find-home?searchAreas=Uppsala_kommun~~se
+        access_method: PUBLIC_HTML
+        dataset: First- and second-hand rental listings
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: samtrygg
+    name: Samtrygg
+    owner: Samtrygg Group AB
+    scope: national
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.samtrygg.se/
+        access_method: PUBLIC_HTML
+        dataset: Rental listings
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: bostadsportal
+    name: BostadsPortal
+    owner: Reva Group
+    scope: national
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://bostadsportal.se/hyresbost%C3%A4der/uppsala/
+        access_method: PUBLIC_HTML
+        dataset: Rental listings
+        assessment: {purpose: "Observe rental-listing lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: hemnet
+    name: Hemnet
+    owner: Hemnet Group AB
+    scope: national
+    cities: [uppsala]
+    roles: [SIGNAL, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: bostads-api
+        url: https://integration.hemnet.se/documentation/v1
+        access_method: AUTHENTICATED_PARTNER_API
+        parser_type: JSON
+        requires_auth: true
+        requires_contract: true
+        api_documentation_url: https://integration.hemnet.se/documentation/v1
+        rate_limits: UNKNOWN
+        dataset: Broker-supplied property listings
+        assessment:
+          purpose: "Observe sale-listing lifecycle"
+          data_use: "Store approved listing fields and lifecycle observations"
+          legal_status: NEEDS_PERMISSION
+          privacy_class: POTENTIALLY_PERSONAL
+          redistribution_rights: UNKNOWN
+          technical_status: GOOD
+          signal_value: VERY_HIGH
+          expected_freshness: UNKNOWN
+          recommended_poll_interval: DISABLED_UNTIL_APPROVED
+          expected_volume: UNKNOWN
+          dedupe_keys: ["Hemnet listing identifier"]
+          decision: WAIT
+          decision_reason: "Authenticated API targets brokers and broker systems; FlyttSignal access is not established."
+          unresolved_questions: ["Partner eligibility", "Permitted read scope and downstream use", "Rate limits and provenance obligations"]
+          review_depth: deep
+          reviewed_at: 2026-08-27
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2026-11-27
+          evidence_urls: ["https://integration.hemnet.se/documentation/v1", "https://integration.hemnet.se/webhook/documentation"]
+          review_path: "../source-reviews/hemnet/2026-08-27.md"
+
+  - source_key: booli
+    name: Booli
+    owner: SBAB Booli AB
+    scope: national
+    cities: [uppsala]
+    roles: [SIGNAL, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: housing-data-api
+        url: https://www.booli.se/vanliga-fragor/sv/articles/16392851-kan-jag-fa-tillgang-till-boolis-api-for-bostadsdata
+        access_method: RESTRICTED_API
+        parser_type: JSON
+        requires_auth: true
+        requires_contract: true
+        rate_limits: UNKNOWN
+        dataset: Housing listings and sales data
+        assessment:
+          purpose: "Observe sale-listing lifecycle"
+          data_use: "Store housing listing fields and lifecycle observations"
+          legal_status: RESTRICTED
+          privacy_class: POTENTIALLY_PERSONAL
+          redistribution_rights: NOT_ALLOWED
+          technical_status: GOOD
+          signal_value: VERY_HIGH
+          expected_freshness: UNKNOWN
+          recommended_poll_interval: DISABLED
+          expected_volume: HIGH
+          dedupe_keys: ["Booli listing identifier"]
+          decision: REJECT
+          decision_reason: "Booli states housing-data API access is generally not allowed for other companies."
+          unresolved_questions: ["Whether Booli would grant written approval for this exact use"]
+          review_depth: deep
+          reviewed_at: 2026-08-27
+          reviewed_by: "FlyttSignal engineering"
+          review_expires_at: 2026-11-27
+          evidence_urls: ["https://www.booli.se/vanliga-fragor/sv/articles/16392851-kan-jag-fa-tillgang-till-boolis-api-for-bostadsdata", "https://pro.booli.se/terms-of-use"]
+          review_path: "../source-reviews/booli/2026-08-27.md"
+
+  - source_key: maklarhuset
+    name: Mäklarhuset Uppsala
+    owner: Mäklarhuset
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.maklarhuset.se/bostad/sverige/uppsalas-lan
+        access_method: PUBLIC_HTML
+        dataset: For-sale and coming listings
+        assessment: {purpose: "Observe sale-listing lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: widerlov
+    name: Widerlöv
+    owner: Widerlöv Fastighetsmäkleri
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://widerlov.se/
+        access_method: PUBLIC_HTML
+        dataset: For-sale and pre-market listings
+        assessment: {purpose: "Observe pre-sale lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: fastighetsbyran
+    name: Fastighetsbyrån Uppsala
+    owner: Fastighetsbyrån
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.fastighetsbyran.com/sv/sverige/hitta-maklare/uppsala
+        access_method: PUBLIC_HTML
+        dataset: For-sale and coming listings
+        assessment: {purpose: "Observe pre-sale lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: svensk-fastighetsformedling
+    name: Svensk Fastighetsförmedling Uppsala
+    owner: Svensk Fastighetsförmedling
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.svenskfast.se/hitta-maklare/uppsala/
+        access_method: PUBLIC_HTML
+        dataset: For-sale and coming listings
+        assessment: {purpose: "Observe pre-sale lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: bjurfors
+    name: Bjurfors Uppsala
+    owner: Bjurfors
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.bjurfors.se/sv/hitta-maklare/uppsala/
+        access_method: PUBLIC_HTML
+        dataset: For-sale and coming listings
+        assessment: {purpose: "Observe pre-sale lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: erik-olsson
+    name: Erik Olsson Uppsala
+    owner: Erik Olsson Fastighetsförmedling
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-listings
+        url: https://www.erikolsson.se/municipalities/uppsala-33
+        access_method: PUBLIC_HTML
+        dataset: For-sale listings
+        assessment: {purpose: "Observe sale-listing lifecycle", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: HIGH, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: jm-uppsala
+    name: JM Uppsala
+    owner: JM AB
+    scope: regional
+    cities: [uppsala]
+    roles: [SIGNAL, ENRICHMENT]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: public-project-listings
+        url: https://www.jm.se/uppsala-lan/uppsala-kommun/
+        access_method: PUBLIC_HTML
+        dataset: New-construction sales
+        assessment: {purpose: "New-construction supply context", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: LOW, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: lantmateriet-fastighetsprisavisering
+    name: Fastighetsprisavisering
+    owner: Lantmäteriet
+    scope: national
+    cities: [uppsala]
+    roles: [VALIDATION, GROUND_TRUTH]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: ordered-monitoring-product
+        url: https://www.lantmateriet.se/sv/geodata/vara-produkter/produktlista/fastighetsprisavisering/
+        access_method: CONTRACTED_DATA_DELIVERY
+        dataset: Property transfers
+        assessment: {purpose: "Validate completed property transfers", legal_status: NEEDS_PERMISSION, technical_status: UNKNOWN, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: spar
+    name: SPAR
+    owner: Skatteverket
+    scope: national
+    cities: [uppsala]
+    roles: [GROUND_TRUTH]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: notification-service
+        url: https://www.statenspersonadressregister.se/master/start/vaara-tjaenster/aviseringstjaenster/
+        access_method: RESTRICTED_CONTRACTED_SERVICE
+        dataset: Personal address notifications
+        assessment: {purpose: "Person-level move verification", legal_status: RESTRICTED, technical_status: UNKNOWN, signal_value: NONE, decision: REJECT, review_depth: inventory}
+
+  - source_key: scb-boendeprofiler
+    name: SCB Boendeprofiler
+    owner: Statistikmyndigheten SCB
+    scope: ordered-area-analysis
+    cities: [uppsala]
+    roles: [BENCHMARK, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: commissioned-report
+        url: https://www.scb.se/vara-tjanster/bestall-data-och-statistik/regionala-statistikprodukter/boendeprofiler/
+        access_method: PAID_ORDER
+        dataset: Aggregated area profiles including moves
+        assessment: {purpose: "Area-level quality benchmark", legal_status: NEEDS_PERMISSION, technical_status: CONSTRAINED, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: maklarstatistik
+    name: Svensk Mäklarstatistik
+    owner: Svensk Mäklarstatistik AB
+    scope: national
+    cities: [uppsala]
+    roles: [BENCHMARK, VALIDATION]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: published-statistics
+        url: https://www.maklarstatistik.se/
+        access_method: PUBLIC_REPORT_OR_CONTRACT
+        dataset: Housing-market statistics
+        assessment: {purpose: "Market benchmark", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+  - source_key: postnord-developer
+    name: PostNord Developer
+    owner: PostNord Sverige AB
+    scope: national
+    cities: [uppsala]
+    roles: [ENRICHMENT]
+    upstream_source_keys: []
+    interfaces:
+      - interface_key: developer-apis
+        url: https://www.postnord.se/en/our-tools/postnord-developer/
+        access_method: AUTHENTICATED_API
+        dataset: "Logistics APIs; general address validation not confirmed"
+        assessment: {purpose: "Address validation", legal_status: UNKNOWN, technical_status: UNKNOWN, signal_value: NONE, decision: INVENTORY, review_depth: inventory}
+
+dependencies:
+  - {from_source_key: uppsalahem, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.uppsalahem.se/bostader/vill-du-bo-hos-oss/"}
+  - {from_source_key: rikshem, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.bostad.uppsala.se/for-hyresvardar/vara-hyresvardar/rikshem"}
+  - {from_source_key: victoriahem, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: medium, evidence_url: "https://www.victoriahem.se/sok-ledigt/hyreslagenheter/"}
+  - {from_source_key: botrygg, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.botrygg.se/uthyrning/"}
+  - {from_source_key: hsb-uppsala, to_source_key: homeq, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.hsb.se/uppsala/om-boende/vara-hyresratter/hyreslagenheter-uppsala/"}
+  - {from_source_key: heimstaden, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://heimstaden.com/se/newsroom/heimstaden-samarbetar-med-uppsala-bostadsformedling/"}
+  - {from_source_key: newsec-uppsala, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.bostad.uppsala.se/for-hyresvardar/vara-hyresvardar/newsec"}
+  - {from_source_key: stena-fastigheter-uppsala, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.stenafastigheter.se/bostader/hyra-bostad/"}
+  - {from_source_key: ikano-bostad, to_source_key: homeq, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.ikanobostad.se/hyra-bostad/"}
+  - {from_source_key: riksbyggen-uppsala, to_source_key: homeq, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.riksbyggen.se/bostad/uppsala-lan/uppsala/hyresratter/"}
+  - {from_source_key: riksbyggen-uppsala, to_source_key: uppsala-bostadsformedling, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.riksbyggen.se/bostad/uppsala-lan/uppsala/hyresratter/lilium/"}
+  - {from_source_key: balder-uppsala, to_source_key: homeq, relationship_type: SYNDICATED_FROM, confidence: high, evidence_url: "https://www.balder.se/lediga-lagenheter/uppsala"}

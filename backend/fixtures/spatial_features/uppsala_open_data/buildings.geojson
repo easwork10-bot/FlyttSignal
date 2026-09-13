@@ -1,0 +1,54 @@
+{
+  "type": "FeatureCollection",
+  "name": "sanitized_uppsala_buildings_fixture",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 9000001,
+      "properties": {
+        "OBJECTID": 9000001,
+        "STYPE": 1001,
+        "STATUS": 3,
+        "ORIGINPLAN": 109,
+        "MODIFICATIONDATE": 1773655200000,
+        "ACTIVITYTYPE": 0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[17.63810, 59.85840], [17.63830, 59.85840], [17.63830, 59.85855], [17.63810, 59.85855], [17.63810, 59.85840]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 9000002,
+      "properties": {
+        "OBJECTID": 9000002,
+        "STYPE": 1001,
+        "STATUS": 3,
+        "ORIGINPLAN": 201,
+        "MODIFICATIONDATE": 1776247200000,
+        "ACTIVITYTYPE": 3
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[17.64000, 59.85900], [17.64025, 59.85900], [17.64025, 59.85918], [17.64000, 59.85918], [17.64000, 59.85900]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 9000003,
+      "properties": {
+        "OBJECTID": 9000003,
+        "STYPE": 1008,
+        "STATUS": 3,
+        "ORIGINPLAN": 314,
+        "MODIFICATIONDATE": 1778925600000,
+        "ACTIVITYTYPE": 4
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[17.64200, 59.86000], [17.64212, 59.86000], [17.64212, 59.86010], [17.64200, 59.86010], [17.64200, 59.86000]]]]
+      }
+    }
+  ]
+}

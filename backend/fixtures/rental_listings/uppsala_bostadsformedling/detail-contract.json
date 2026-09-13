@@ -1,0 +1,84 @@
+{
+  "description": "Minimal public UBF detail-contract examples captured 2026-09-06; no applicant data.",
+  "cases": [
+    {
+      "requested_id": "200062929364",
+      "checked_at": "2026-09-06T13:14:44.356647Z",
+      "response": {
+        "data": {
+          "getRentalObject": {
+            "rentalObjectId": 200062929364,
+            "objectNumber": "C-1006",
+            "apartmentNumber": "1006",
+            "street": "Salabacksgatan 52",
+            "rooms": 1.5,
+            "area": 35,
+            "projectId": 200054150693,
+            "projectName": "Klacken",
+            "fastighetsStatus": [
+              {
+                "rentalObjectCategoryId": "NEW-PRODUCTION",
+                "name": "Nyproduktion"
+              }
+            ],
+            "landlord": {
+              "landlordId": 200054007458,
+              "name": "Klövern"
+            }
+          }
+        }
+      }
+    },
+    {
+      "requested_id": "200062530562",
+      "checked_at": "2026-09-06T13:14:44.935624Z",
+      "response": {
+        "data": {
+          "getRentalObject": {
+            "rentalObjectId": 200062530562,
+            "objectNumber": "102601-01-1102",
+            "apartmentNumber": "1102",
+            "street": "Vivelvägen 64",
+            "rooms": 2,
+            "area": 55,
+            "projectId": 200044513386,
+            "projectName": "Lindblomman",
+            "fastighetsStatus": [
+              {
+                "rentalObjectCategoryId": "NEW-PRODUCTION",
+                "name": "Nyproduktion"
+              }
+            ],
+            "landlord": {
+              "landlordId": 100017249115,
+              "name": "Hemvist"
+            }
+          }
+        }
+      }
+    },
+    {
+      "requested_id": "200062844426",
+      "checked_at": "2026-09-06T13:14:45.583067Z",
+      "response": {
+        "data": {
+          "getRentalObject": {
+            "rentalObjectId": 200062844426,
+            "objectNumber": "7001-012-01-0346",
+            "apartmentNumber": "1010",
+            "street": "Studentstaden 26",
+            "rooms": 1,
+            "area": 13,
+            "projectId": null,
+            "projectName": null,
+            "fastighetsStatus": [],
+            "landlord": {
+              "landlordId": 1000100,
+              "name": "Uppsalahem"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "source_item_id": "200062438843",
+    "source_url": "https://www.bostad.uppsala.se/mypages/app/visa/200062438843",
+    "address": "Sköldmövägen 19 C",
+    "city": "Uppsala",
+    "municipality_code": "0380",
+    "rooms": 1,
+    "area_m2": 36,
+    "monthly_rent": 7140,
+    "property_type": "rental",
+    "publisher_name": "Uppsala Bostadsförmedling",
+    "upstream_provider_key": "rikshem",
+    "upstream_provider_name": "Rikshem",
+    "categories": ["hyresrätt", "marknadsplats", "publik-sökvy"],
+    "data_mode": "fixture",
+    "attribution": "Källa: Uppsala Bostadsförmedling; hyresvärd: Rikshem"
+  },
+  {
+    "source_item_id": "200062521232",
+    "source_url": "https://www.bostad.uppsala.se/mypages/app/visa/200062521232",
+    "address": "Johannesbäcksgatan 49",
+    "city": "Uppsala",
+    "municipality_code": "0380",
+    "rooms": 4,
+    "area_m2": 88,
+    "monthly_rent": 15224,
+    "property_type": "rental",
+    "publisher_name": "Uppsala Bostadsförmedling",
+    "upstream_provider_key": "newsec",
+    "upstream_provider_name": "Newsec (förvaltning)",
+    "categories": ["hyresrätt", "marknadsplats", "förvaltat-objekt", "publik-sökvy"],
+    "data_mode": "fixture",
+    "attribution": "Källa: Uppsala Bostadsförmedling; förvaltare: Newsec; fastighetsägare kan variera"
+  },
+  {
+    "source_item_id": "200062359330",
+    "source_url": "https://www.bostad.uppsala.se/mypages/app/visa/200062359330",
+    "address": "Thorildsgatan 10",
+    "city": "Uppsala",
+    "municipality_code": "0380",
+    "rooms": 3,
+    "area_m2": 76.6,
+    "monthly_rent": 11956,
+    "property_type": "rental",
+    "publisher_name": "Uppsala Bostadsförmedling",
+    "upstream_provider_key": "stena-fastigheter",
+    "upstream_provider_name": "Stena Fastigheter",
+    "categories": ["hyresrätt", "marknadsplats", "publik-sökvy"],
+    "data_mode": "fixture",
+    "attribution": "Källa: Uppsala Bostadsförmedling; hyresvärd: Stena Fastigheter"
+  }
+]

@@ -1,0 +1,6337 @@
+{
+  "components": {
+    "schemas": {
+      "ActivatedScoreDefinitionOut": {
+        "properties": {
+          "activated_at": {
+            "format": "date-time",
+            "title": "Activated At",
+            "type": "string"
+          },
+          "decision_reason": {
+            "title": "Decision Reason",
+            "type": "string"
+          },
+          "definition": {
+            "$ref": "#/components/schemas/ScoreDefinitionOut"
+          },
+          "dimension": {
+            "title": "Dimension",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dimension",
+          "definition",
+          "activated_at",
+          "decision_reason"
+        ],
+        "title": "ActivatedScoreDefinitionOut",
+        "type": "object"
+      },
+      "ActiveDimensionsOut": {
+        "properties": {
+          "as_of_date": {
+            "format": "date",
+            "title": "As Of Date",
+            "type": "string"
+          },
+          "data_confidence": {
+            "title": "Data Confidence",
+            "type": "integer"
+          },
+          "definition_set_hash": {
+            "title": "Definition Set Hash",
+            "type": "string"
+          },
+          "run_id": {
+            "format": "uuid",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "signal_strength": {
+            "title": "Signal Strength",
+            "type": "integer"
+          },
+          "timing": {
+            "title": "Timing",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "run_id",
+          "as_of_date",
+          "definition_set_hash",
+          "signal_strength",
+          "data_confidence",
+          "timing"
+        ],
+        "title": "ActiveDimensionsOut",
+        "type": "object"
+      },
+      "AddressEnrichmentOut": {
+        "properties": {
+          "attribution": {
+            "title": "Attribution",
+            "type": "string"
+          },
+          "canonical_address": {
+            "title": "Canonical Address",
+            "type": "string"
+          },
+          "data_mode": {
+            "title": "Data Mode",
+            "type": "string"
+          },
+          "external_address_id": {
+            "format": "uuid",
+            "title": "External Address Id",
+            "type": "string"
+          },
+          "municipality_code": {
+            "title": "Municipality Code",
+            "type": "string"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "postal_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postal Code"
+          },
+          "postal_town": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postal Town"
+          },
+          "register_unit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RegisterUnitReferenceOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_easting": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Source Easting",
+            "type": "string"
+          },
+          "source_northing": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Source Northing",
+            "type": "string"
+          },
+          "source_srid": {
+            "title": "Source Srid",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "data_mode",
+          "external_address_id",
+          "canonical_address",
+          "municipality_code",
+          "postal_code",
+          "postal_town",
+          "status",
+          "source_srid",
+          "source_easting",
+          "source_northing",
+          "attribution",
+          "observed_at",
+          "updated_at"
+        ],
+        "title": "AddressEnrichmentOut",
+        "type": "object"
+      },
+      "CityOut": {
+        "properties": {
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "municipality_code": {
+            "title": "Municipality Code",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "municipality_code",
+          "enabled"
+        ],
+        "title": "CityOut",
+        "type": "object"
+      },
+      "EvidenceOut": {
+        "properties": {
+          "effective_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Date"
+          },
+          "event_id": {
+            "format": "uuid",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_type": {
+            "title": "Event Type",
+            "type": "string"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "raw_item_id": {
+            "format": "uuid",
+            "title": "Raw Item Id",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_item_id": {
+            "title": "Source Item Id",
+            "type": "string"
+          },
+          "weight": {
+            "title": "Weight",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "event_id",
+          "raw_item_id",
+          "source_item_id",
+          "event_type",
+          "source",
+          "observed_at",
+          "effective_date",
+          "weight",
+          "reason"
+        ],
+        "title": "EvidenceOut",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HousingProviderList": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/HousingProviderOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "HousingProviderList",
+        "type": "object"
+      },
+      "HousingProviderOut": {
+        "properties": {
+          "channels": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderChannelOut"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "discovery_source": {
+            "title": "Discovery Source",
+            "type": "string"
+          },
+          "evidence_url": {
+            "title": "Evidence Url",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "official_url": {
+            "title": "Official Url",
+            "type": "string"
+          },
+          "provider_type": {
+            "title": "Provider Type",
+            "type": "string"
+          },
+          "verified_at": {
+            "format": "date-time",
+            "title": "Verified At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "name",
+          "provider_type",
+          "official_url",
+          "city",
+          "discovery_source",
+          "evidence_url",
+          "verified_at",
+          "channels"
+        ],
+        "title": "HousingProviderOut",
+        "type": "object"
+      },
+      "LeadTimeSummaryOut": {
+        "properties": {
+          "classification_tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Classification Tag"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "invalid_input_count": {
+            "title": "Invalid Input Count",
+            "type": "integer"
+          },
+          "late_count": {
+            "title": "Late Count",
+            "type": "integer"
+          },
+          "listing_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Listing Status"
+          },
+          "max_days": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Days"
+          },
+          "measured_count": {
+            "title": "Measured Count",
+            "type": "integer"
+          },
+          "measurement_count": {
+            "title": "Measurement Count",
+            "type": "integer"
+          },
+          "median_days": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Days"
+          },
+          "min_days": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Days"
+          },
+          "missing_input_count": {
+            "title": "Missing Input Count",
+            "type": "integer"
+          },
+          "population_count": {
+            "title": "Population Count",
+            "type": "integer"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "source_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Key"
+          }
+        },
+        "required": [
+          "source_key",
+          "classification_tag",
+          "listing_status",
+          "rule_version",
+          "generated_at",
+          "population_count",
+          "measurement_count",
+          "measured_count",
+          "missing_input_count",
+          "invalid_input_count",
+          "late_count",
+          "min_days",
+          "median_days",
+          "max_days"
+        ],
+        "title": "LeadTimeSummaryOut",
+        "type": "object"
+      },
+      "LifecycleReadinessOut": {
+        "properties": {
+          "considered_run_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Considered Run Ids",
+            "type": "array"
+          },
+          "evaluated_at": {
+            "format": "date-time",
+            "title": "Evaluated At",
+            "type": "string"
+          },
+          "latest_scheduled_run_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Scheduled Run At"
+          },
+          "qualifying_runs": {
+            "title": "Qualifying Runs",
+            "type": "integer"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "required_runs": {
+            "title": "Required Runs",
+            "type": "integer"
+          },
+          "rule_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rule Version"
+          },
+          "source_key": {
+            "title": "Source Key",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_key",
+          "status",
+          "required_runs",
+          "qualifying_runs",
+          "rule_version",
+          "reasons",
+          "considered_run_ids",
+          "latest_scheduled_run_at",
+          "evaluated_at"
+        ],
+        "title": "LifecycleReadinessOut",
+        "type": "object"
+      },
+      "ListingMeasurementOut": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "inputs": {
+            "additionalProperties": true,
+            "title": "Inputs",
+            "type": "object"
+          },
+          "listing_id": {
+            "format": "uuid",
+            "title": "Listing Id",
+            "type": "string"
+          },
+          "measured_at": {
+            "format": "date-time",
+            "title": "Measured At",
+            "type": "string"
+          },
+          "metric": {
+            "title": "Metric",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "id",
+          "listing_id",
+          "metric",
+          "value",
+          "unit",
+          "status",
+          "rule_version",
+          "inputs",
+          "measured_at",
+          "updated_at"
+        ],
+        "title": "ListingMeasurementOut",
+        "type": "object"
+      },
+      "OutcomeSummaryItem": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "outcome_type": {
+            "title": "Outcome Type",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "verification_level": {
+            "title": "Verification Level",
+            "type": "string"
+          }
+        },
+        "required": [
+          "outcome_type",
+          "subject",
+          "verification_level",
+          "count"
+        ],
+        "title": "OutcomeSummaryItem",
+        "type": "object"
+      },
+      "OutcomeSummaryOut": {
+        "properties": {
+          "confirmed_move_count": {
+            "title": "Confirmed Move Count",
+            "type": "integer"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/OutcomeSummaryItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "outcome_count": {
+            "title": "Outcome Count",
+            "type": "integer"
+          },
+          "signal_population_count": {
+            "title": "Signal Population Count",
+            "type": "integer"
+          },
+          "signals_with_outcomes": {
+            "title": "Signals With Outcomes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "generated_at",
+          "signal_population_count",
+          "signals_with_outcomes",
+          "outcome_count",
+          "confirmed_move_count",
+          "items"
+        ],
+        "title": "OutcomeSummaryOut",
+        "type": "object"
+      },
+      "PilotActivityRecordedOut": {
+        "properties": {
+          "activity_type": {
+            "$ref": "#/components/schemas/PilotActivityType"
+          },
+          "recorded_count": {
+            "title": "Recorded Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "activity_type",
+          "recorded_count"
+        ],
+        "title": "PilotActivityRecordedOut",
+        "type": "object"
+      },
+      "PilotActivityType": {
+        "enum": [
+          "SHOWN",
+          "OPENED"
+        ],
+        "title": "PilotActivityType",
+        "type": "string"
+      },
+      "PilotActivityUpsert": {
+        "properties": {
+          "activity_type": {
+            "$ref": "#/components/schemas/PilotActivityType"
+          },
+          "cohort_as_of_date": {
+            "format": "date",
+            "title": "Cohort As Of Date",
+            "type": "string"
+          },
+          "cohort_version": {
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Cohort Version",
+            "type": "string"
+          },
+          "definition_set_hash": {
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Definition Set Hash",
+            "type": "string"
+          },
+          "dimension_scope_key": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Dimension Scope Key",
+            "type": "string"
+          },
+          "pilot_key": {
+            "maxLength": 80,
+            "minLength": 2,
+            "pattern": "^[a-z0-9][a-z0-9_-]+$",
+            "title": "Pilot Key",
+            "type": "string"
+          },
+          "score_as_of_date": {
+            "format": "date",
+            "title": "Score As Of Date",
+            "type": "string"
+          },
+          "score_run_id": {
+            "format": "uuid",
+            "title": "Score Run Id",
+            "type": "string"
+          },
+          "signal_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Signal Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "pilot_key",
+          "cohort_version",
+          "cohort_as_of_date",
+          "dimension_scope_key",
+          "score_run_id",
+          "score_as_of_date",
+          "definition_set_hash",
+          "activity_type",
+          "signal_ids"
+        ],
+        "title": "PilotActivityUpsert",
+        "type": "object"
+      },
+      "PilotCohortCriteriaOut": {
+        "properties": {
+          "active_signals_only": {
+            "const": true,
+            "default": true,
+            "title": "Active Signals Only",
+            "type": "boolean"
+          },
+          "city_id": {
+            "title": "City Id",
+            "type": "integer"
+          },
+          "dated_signals_only": {
+            "const": true,
+            "default": true,
+            "title": "Dated Signals Only",
+            "type": "boolean"
+          },
+          "live_evidence_required": {
+            "const": true,
+            "default": true,
+            "title": "Live Evidence Required",
+            "type": "boolean"
+          },
+          "move_horizon_days": {
+            "title": "Move Horizon Days",
+            "type": "integer"
+          },
+          "signal_age_days": {
+            "title": "Signal Age Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "city_id",
+          "signal_age_days",
+          "move_horizon_days"
+        ],
+        "title": "PilotCohortCriteriaOut",
+        "type": "object"
+      },
+      "PilotFeedbackOut": {
+        "properties": {
+          "cohort_as_of_date": {
+            "format": "date",
+            "title": "Cohort As Of Date",
+            "type": "string"
+          },
+          "cohort_version": {
+            "title": "Cohort Version",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "data_confidence_at_review": {
+            "title": "Data Confidence At Review",
+            "type": "integer"
+          },
+          "definition_set_hash": {
+            "title": "Definition Set Hash",
+            "type": "string"
+          },
+          "dimension_scope_key": {
+            "title": "Dimension Scope Key",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "pilot_key": {
+            "title": "Pilot Key",
+            "type": "string"
+          },
+          "reason": {
+            "$ref": "#/components/schemas/PilotFeedbackReason"
+          },
+          "reviewed_at": {
+            "format": "date-time",
+            "title": "Reviewed At",
+            "type": "string"
+          },
+          "score_as_of_date": {
+            "format": "date",
+            "title": "Score As Of Date",
+            "type": "string"
+          },
+          "score_run_id": {
+            "format": "uuid",
+            "title": "Score Run Id",
+            "type": "string"
+          },
+          "signal_id": {
+            "format": "uuid",
+            "title": "Signal Id",
+            "type": "string"
+          },
+          "signal_strength_at_review": {
+            "title": "Signal Strength At Review",
+            "type": "integer"
+          },
+          "timing_at_review": {
+            "title": "Timing At Review",
+            "type": "integer"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/PilotFeedbackVerdict"
+          }
+        },
+        "required": [
+          "id",
+          "signal_id",
+          "pilot_key",
+          "cohort_version",
+          "cohort_as_of_date",
+          "dimension_scope_key",
+          "score_run_id",
+          "score_as_of_date",
+          "definition_set_hash",
+          "signal_strength_at_review",
+          "data_confidence_at_review",
+          "timing_at_review",
+          "verdict",
+          "reason",
+          "note",
+          "reviewed_at",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "PilotFeedbackOut",
+        "type": "object"
+      },
+      "PilotFeedbackReason": {
+        "enum": [
+          "GOOD_OPPORTUNITY",
+          "TOO_EARLY",
+          "TOO_LATE",
+          "WRONG_PROPERTY",
+          "WEAK_SIGNAL",
+          "DUPLICATE",
+          "OUTSIDE_SERVICE_AREA",
+          "INSUFFICIENT_CONTEXT"
+        ],
+        "title": "PilotFeedbackReason",
+        "type": "string"
+      },
+      "PilotFeedbackUpsert": {
+        "properties": {
+          "cohort_as_of_date": {
+            "format": "date",
+            "title": "Cohort As Of Date",
+            "type": "string"
+          },
+          "cohort_version": {
+            "maxLength": 50,
+            "minLength": 1,
+            "title": "Cohort Version",
+            "type": "string"
+          },
+          "definition_set_hash": {
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Definition Set Hash",
+            "type": "string"
+          },
+          "dimension_scope_key": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Dimension Scope Key",
+            "type": "string"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "pilot_key": {
+            "maxLength": 80,
+            "minLength": 2,
+            "pattern": "^[a-z0-9][a-z0-9_-]+$",
+            "title": "Pilot Key",
+            "type": "string"
+          },
+          "reason": {
+            "$ref": "#/components/schemas/PilotFeedbackReason"
+          },
+          "score_as_of_date": {
+            "format": "date",
+            "title": "Score As Of Date",
+            "type": "string"
+          },
+          "score_run_id": {
+            "format": "uuid",
+            "title": "Score Run Id",
+            "type": "string"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/PilotFeedbackVerdict"
+          }
+        },
+        "required": [
+          "pilot_key",
+          "cohort_version",
+          "cohort_as_of_date",
+          "dimension_scope_key",
+          "score_run_id",
+          "score_as_of_date",
+          "definition_set_hash",
+          "verdict",
+          "reason"
+        ],
+        "title": "PilotFeedbackUpsert",
+        "type": "object"
+      },
+      "PilotFeedbackVerdict": {
+        "enum": [
+          "USEFUL",
+          "MAYBE",
+          "NOT_USEFUL"
+        ],
+        "title": "PilotFeedbackVerdict",
+        "type": "string"
+      },
+      "PilotMetricsOut": {
+        "properties": {
+          "cohort_as_of_date": {
+            "format": "date",
+            "title": "Cohort As Of Date",
+            "type": "string"
+          },
+          "cohort_version": {
+            "title": "Cohort Version",
+            "type": "string"
+          },
+          "definition_set_hash": {
+            "title": "Definition Set Hash",
+            "type": "string"
+          },
+          "dimension_scope_key": {
+            "title": "Dimension Scope Key",
+            "type": "string"
+          },
+          "maybe": {
+            "title": "Maybe",
+            "type": "integer"
+          },
+          "not_useful": {
+            "title": "Not Useful",
+            "type": "integer"
+          },
+          "open_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Open Rate"
+          },
+          "opened": {
+            "title": "Opened",
+            "type": "integer"
+          },
+          "pilot_key": {
+            "title": "Pilot Key",
+            "type": "string"
+          },
+          "reason_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Reason Counts",
+            "type": "object"
+          },
+          "review_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review Rate"
+          },
+          "reviewed": {
+            "title": "Reviewed",
+            "type": "integer"
+          },
+          "score_as_of_date": {
+            "format": "date",
+            "title": "Score As Of Date",
+            "type": "string"
+          },
+          "score_run_id": {
+            "format": "uuid",
+            "title": "Score Run Id",
+            "type": "string"
+          },
+          "shown": {
+            "title": "Shown",
+            "type": "integer"
+          },
+          "useful": {
+            "title": "Useful",
+            "type": "integer"
+          },
+          "useful_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Useful Rate"
+          }
+        },
+        "required": [
+          "pilot_key",
+          "cohort_version",
+          "cohort_as_of_date",
+          "dimension_scope_key",
+          "score_run_id",
+          "score_as_of_date",
+          "definition_set_hash",
+          "shown",
+          "opened",
+          "reviewed",
+          "useful",
+          "maybe",
+          "not_useful",
+          "open_rate",
+          "review_rate",
+          "useful_rate",
+          "reason_counts"
+        ],
+        "title": "PilotMetricsOut",
+        "type": "object"
+      },
+      "PilotPaginationOut": {
+        "properties": {
+          "has_next": {
+            "title": "Has Next",
+            "type": "boolean"
+          },
+          "has_previous": {
+            "title": "Has Previous",
+            "type": "boolean"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "limit",
+          "offset",
+          "has_previous",
+          "has_next"
+        ],
+        "title": "PilotPaginationOut",
+        "type": "object"
+      },
+      "PilotSignalFeedbackSummaryOut": {
+        "properties": {
+          "reason": {
+            "$ref": "#/components/schemas/PilotFeedbackReason"
+          },
+          "reviewed_at": {
+            "format": "date-time",
+            "title": "Reviewed At",
+            "type": "string"
+          },
+          "verdict": {
+            "$ref": "#/components/schemas/PilotFeedbackVerdict"
+          }
+        },
+        "required": [
+          "verdict",
+          "reason",
+          "reviewed_at"
+        ],
+        "title": "PilotSignalFeedbackSummaryOut",
+        "type": "object"
+      },
+      "PilotSignalFiltersOut": {
+        "properties": {
+          "address_query": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address Query"
+          },
+          "center_latitude": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Center Latitude"
+          },
+          "center_longitude": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Center Longitude"
+          },
+          "date_from": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date From"
+          },
+          "date_to": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date To"
+          },
+          "max_area_m2": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Area M2"
+          },
+          "max_rooms": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Rooms"
+          },
+          "min_area_m2": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Area M2"
+          },
+          "min_rooms": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Rooms"
+          },
+          "property_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Property Type"
+          },
+          "radius_km": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Radius Km"
+          },
+          "review_status": {
+            "enum": [
+              "ALL",
+              "REVIEWED",
+              "UNREVIEWED"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "signal_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signal Type"
+          },
+          "strength_band": {
+            "anyOf": [
+              {
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Band"
+          }
+        },
+        "required": [
+          "address_query",
+          "review_status",
+          "strength_band",
+          "signal_type",
+          "date_from",
+          "date_to",
+          "property_type",
+          "min_rooms",
+          "max_rooms",
+          "min_area_m2",
+          "max_area_m2",
+          "center_latitude",
+          "center_longitude",
+          "radius_km"
+        ],
+        "title": "PilotSignalFiltersOut",
+        "type": "object"
+      },
+      "PilotSignalListOut": {
+        "properties": {
+          "applied_filters": {
+            "$ref": "#/components/schemas/PilotSignalFiltersOut"
+          },
+          "cohort_as_of_date": {
+            "format": "date",
+            "title": "Cohort As Of Date",
+            "type": "string"
+          },
+          "cohort_version": {
+            "title": "Cohort Version",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "criteria": {
+            "$ref": "#/components/schemas/PilotCohortCriteriaOut"
+          },
+          "definition_set_hash": {
+            "title": "Definition Set Hash",
+            "type": "string"
+          },
+          "dimension_scope_key": {
+            "title": "Dimension Scope Key",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PilotSignalOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PilotPaginationOut"
+          },
+          "score_as_of_date": {
+            "format": "date",
+            "title": "Score As Of Date",
+            "type": "string"
+          },
+          "score_run_id": {
+            "format": "uuid",
+            "title": "Score Run Id",
+            "type": "string"
+          },
+          "sort": {
+            "enum": [
+              "PRIORITY",
+              "MOVE_WINDOW",
+              "NEWEST"
+            ],
+            "title": "Sort",
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/PilotSignalSummaryOut"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "cohort_version",
+          "cohort_as_of_date",
+          "dimension_scope_key",
+          "score_run_id",
+          "score_as_of_date",
+          "definition_set_hash",
+          "criteria",
+          "applied_filters",
+          "sort",
+          "summary",
+          "pagination",
+          "items",
+          "count",
+          "total"
+        ],
+        "title": "PilotSignalListOut",
+        "type": "object"
+      },
+      "PilotSignalOut": {
+        "properties": {
+          "active_dimensions": {
+            "$ref": "#/components/schemas/ActiveDimensionsOut"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "days_until_window_start": {
+            "title": "Days Until Window Start",
+            "type": "integer"
+          },
+          "estimated_move_from": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Move From"
+          },
+          "estimated_move_to": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Move To"
+          },
+          "evidence": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/EvidenceOut"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "evidence_count": {
+            "title": "Evidence Count",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "pilot_feedback": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PilotSignalFeedbackSummaryOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "property": {
+            "$ref": "#/components/schemas/PropertyOut"
+          },
+          "property_id": {
+            "format": "uuid",
+            "title": "Property Id",
+            "type": "string"
+          },
+          "signal_age_days": {
+            "title": "Signal Age Days",
+            "type": "integer"
+          },
+          "signal_type": {
+            "title": "Signal Type",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "strength_band": {
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ],
+            "title": "Strength Band",
+            "type": "string"
+          },
+          "timing": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SignalTimingOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "property_id",
+          "signal_type",
+          "status",
+          "active_dimensions",
+          "estimated_move_from",
+          "estimated_move_to",
+          "created_at",
+          "updated_at",
+          "property",
+          "evidence_count",
+          "strength_band",
+          "signal_age_days",
+          "days_until_window_start"
+        ],
+        "title": "PilotSignalOut",
+        "type": "object"
+      },
+      "PilotSignalSummaryOut": {
+        "properties": {
+          "high": {
+            "title": "High",
+            "type": "integer"
+          },
+          "low": {
+            "title": "Low",
+            "type": "integer"
+          },
+          "mapped": {
+            "title": "Mapped",
+            "type": "integer"
+          },
+          "medium": {
+            "title": "Medium",
+            "type": "integer"
+          },
+          "next_30_days": {
+            "title": "Next 30 Days",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total",
+          "high",
+          "medium",
+          "low",
+          "next_30_days",
+          "mapped"
+        ],
+        "title": "PilotSignalSummaryOut",
+        "type": "object"
+      },
+      "PropertyOut": {
+        "properties": {
+          "address": {
+            "title": "Address",
+            "type": "string"
+          },
+          "address_enrichments": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/AddressEnrichmentOut"
+            },
+            "title": "Address Enrichments",
+            "type": "array"
+          },
+          "area_m2": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Area M2"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "city_id": {
+            "title": "City Id",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "municipality_code": {
+            "title": "Municipality Code",
+            "type": "string"
+          },
+          "new_construction": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Construction"
+          },
+          "property_type": {
+            "title": "Property Type",
+            "type": "string"
+          },
+          "rooms": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rooms"
+          },
+          "unit_identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit Identifier"
+          }
+        },
+        "required": [
+          "id",
+          "address",
+          "city_id",
+          "city",
+          "municipality_code",
+          "property_type",
+          "unit_identifier",
+          "rooms",
+          "area_m2",
+          "new_construction",
+          "latitude",
+          "longitude"
+        ],
+        "title": "PropertyOut",
+        "type": "object"
+      },
+      "ProviderChannelOut": {
+        "properties": {
+          "channel_key": {
+            "title": "Channel Key",
+            "type": "string"
+          },
+          "channel_type": {
+            "title": "Channel Type",
+            "type": "string"
+          },
+          "collection_status": {
+            "title": "Collection Status",
+            "type": "string"
+          },
+          "coverage": {
+            "title": "Coverage",
+            "type": "string"
+          },
+          "is_primary": {
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "next_action": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Action"
+          },
+          "publisher_name": {
+            "title": "Publisher Name",
+            "type": "string"
+          },
+          "requires_agreement": {
+            "title": "Requires Agreement",
+            "type": "boolean"
+          },
+          "requires_auth": {
+            "title": "Requires Auth",
+            "type": "boolean"
+          },
+          "source_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Key"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "channel_key",
+          "channel_type",
+          "publisher_name",
+          "url",
+          "coverage",
+          "collection_status",
+          "requires_auth",
+          "requires_agreement",
+          "next_action",
+          "is_primary",
+          "source_key"
+        ],
+        "title": "ProviderChannelOut",
+        "type": "object"
+      },
+      "QualityFindingOut": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "severity": {
+            "title": "Severity",
+            "type": "string"
+          }
+        },
+        "required": [
+          "severity",
+          "code",
+          "message"
+        ],
+        "title": "QualityFindingOut",
+        "type": "object"
+      },
+      "QualityRatioOut": {
+        "properties": {
+          "denominator": {
+            "title": "Denominator",
+            "type": "integer"
+          },
+          "numerator": {
+            "title": "Numerator",
+            "type": "integer"
+          },
+          "percent": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percent"
+          }
+        },
+        "required": [
+          "numerator",
+          "denominator",
+          "percent"
+        ],
+        "title": "QualityRatioOut",
+        "type": "object"
+      },
+      "QualitySourceOut": {
+        "properties": {
+          "active_listing_count": {
+            "title": "Active Listing Count",
+            "type": "integer"
+          },
+          "completeness_rule_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completeness Rule Version"
+          },
+          "latest_execution_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Execution Status"
+          },
+          "latest_run_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Run At"
+          },
+          "latest_snapshot_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Snapshot Status"
+          },
+          "missing_available_from_count": {
+            "title": "Missing Available From Count",
+            "type": "integer"
+          },
+          "source_key": {
+            "title": "Source Key",
+            "type": "string"
+          },
+          "source_name": {
+            "title": "Source Name",
+            "type": "string"
+          },
+          "unique_property_count": {
+            "title": "Unique Property Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "source_key",
+          "source_name",
+          "active_listing_count",
+          "unique_property_count",
+          "missing_available_from_count",
+          "latest_run_at",
+          "latest_execution_status",
+          "latest_snapshot_status",
+          "completeness_rule_version"
+        ],
+        "title": "QualitySourceOut",
+        "type": "object"
+      },
+      "QualityStrengthBucketOut": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "max_strength": {
+            "title": "Max Strength",
+            "type": "integer"
+          },
+          "min_strength": {
+            "title": "Min Strength",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "label",
+          "min_strength",
+          "max_strength",
+          "count"
+        ],
+        "title": "QualityStrengthBucketOut",
+        "type": "object"
+      },
+      "QualitySummaryOut": {
+        "properties": {
+          "active_signal_count": {
+            "title": "Active Signal Count",
+            "type": "integer"
+          },
+          "ambiguous_match_rate": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "average_evidence_count": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average Evidence Count"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "city_id": {
+            "title": "City Id",
+            "type": "integer"
+          },
+          "classification_coverage": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "closed_signal_count": {
+            "title": "Closed Signal Count",
+            "type": "integer"
+          },
+          "confirmed_move_count": {
+            "title": "Confirmed Move Count",
+            "type": "integer"
+          },
+          "cross_source_property_overlap_rate": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "data_mode": {
+            "title": "Data Mode",
+            "type": "string"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/QualityFindingOut"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "listing_population_count": {
+            "title": "Listing Population Count",
+            "type": "integer"
+          },
+          "measurement_record_coverage": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "median_lead_time_days": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Lead Time Days"
+          },
+          "median_signal_age_days": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Signal Age Days"
+          },
+          "missing_available_from_rate": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "outcome_count": {
+            "title": "Outcome Count",
+            "type": "integer"
+          },
+          "outcome_coverage": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "same_source_duplicate_rate": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "signal_population_count": {
+            "title": "Signal Population Count",
+            "type": "integer"
+          },
+          "signal_strength_distribution": {
+            "items": {
+              "$ref": "#/components/schemas/QualityStrengthBucketOut"
+            },
+            "title": "Signal Strength Distribution",
+            "type": "array"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/QualitySourceOut"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "strong_signal_count": {
+            "title": "Strong Signal Count",
+            "type": "integer"
+          },
+          "unique_property_count": {
+            "title": "Unique Property Count",
+            "type": "integer"
+          },
+          "unknown_classification_rate": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          },
+          "usable_lead_time_rate": {
+            "$ref": "#/components/schemas/QualityRatioOut"
+          }
+        },
+        "required": [
+          "generated_at",
+          "rule_version",
+          "city_id",
+          "city",
+          "data_mode",
+          "listing_population_count",
+          "unique_property_count",
+          "signal_population_count",
+          "active_signal_count",
+          "closed_signal_count",
+          "strong_signal_count",
+          "average_evidence_count",
+          "median_signal_age_days",
+          "median_lead_time_days",
+          "classification_coverage",
+          "unknown_classification_rate",
+          "measurement_record_coverage",
+          "usable_lead_time_rate",
+          "missing_available_from_rate",
+          "same_source_duplicate_rate",
+          "cross_source_property_overlap_rate",
+          "ambiguous_match_rate",
+          "outcome_coverage",
+          "outcome_count",
+          "confirmed_move_count",
+          "signal_strength_distribution",
+          "sources",
+          "findings"
+        ],
+        "title": "QualitySummaryOut",
+        "type": "object"
+      },
+      "RegisterUnitReferenceOut": {
+        "properties": {
+          "designation": {
+            "title": "Designation",
+            "type": "string"
+          },
+          "external_register_unit_id": {
+            "format": "uuid",
+            "title": "External Register Unit Id",
+            "type": "string"
+          },
+          "register_unit_type": {
+            "title": "Register Unit Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "external_register_unit_id",
+          "designation",
+          "register_unit_type"
+        ],
+        "title": "RegisterUnitReferenceOut",
+        "type": "object"
+      },
+      "RentalCoverageOut": {
+        "properties": {
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "known_provider_count": {
+            "title": "Known Provider Count",
+            "type": "integer"
+          },
+          "missing_known_provider_count": {
+            "title": "Missing Known Provider Count",
+            "type": "integer"
+          },
+          "observed_provider_count": {
+            "title": "Observed Provider Count",
+            "type": "integer"
+          },
+          "providers": {
+            "items": {
+              "$ref": "#/components/schemas/RentalCoverageProviderOut"
+            },
+            "title": "Providers",
+            "type": "array"
+          },
+          "represented_known_provider_count": {
+            "title": "Represented Known Provider Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "city",
+          "generated_at",
+          "known_provider_count",
+          "represented_known_provider_count",
+          "missing_known_provider_count",
+          "observed_provider_count",
+          "providers"
+        ],
+        "title": "RentalCoverageOut",
+        "type": "object"
+      },
+      "RentalCoverageProviderOut": {
+        "properties": {
+          "collector_keys": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Collector Keys",
+            "type": "array"
+          },
+          "gap_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gap Reason"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "known_provider": {
+            "title": "Known Provider",
+            "type": "boolean"
+          },
+          "live_listing_count": {
+            "title": "Live Listing Count",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "publishers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Publishers",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "known_provider",
+          "live_listing_count",
+          "publishers",
+          "collector_keys",
+          "status",
+          "gap_reason"
+        ],
+        "title": "RentalCoverageProviderOut",
+        "type": "object"
+      },
+      "RentalListingClassificationOut": {
+        "properties": {
+          "confidence": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Confidence",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "evidence": {
+            "additionalProperties": true,
+            "title": "Evidence",
+            "type": "object"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "listing_id": {
+            "format": "uuid",
+            "title": "Listing Id",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "tag": {
+            "title": "Tag",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "listing_id",
+          "tag",
+          "confidence",
+          "reason",
+          "evidence",
+          "rule_version",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "RentalListingClassificationOut",
+        "type": "object"
+      },
+      "RentalListingList": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RentalListingOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "RentalListingList",
+        "type": "object"
+      },
+      "RentalListingOut": {
+        "properties": {
+          "application_deadline": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Deadline"
+          },
+          "area_m2": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Area M2"
+          },
+          "attribution": {
+            "title": "Attribution",
+            "type": "string"
+          },
+          "available_from": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Available From"
+          },
+          "canonical_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Url"
+          },
+          "categories": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Categories",
+            "type": "array"
+          },
+          "data_mode": {
+            "title": "Data Mode",
+            "type": "string"
+          },
+          "first_seen_at": {
+            "format": "date-time",
+            "title": "First Seen At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "last_seen_at": {
+            "format": "date-time",
+            "title": "Last Seen At",
+            "type": "string"
+          },
+          "monthly_rent": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Rent"
+          },
+          "new_construction": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Construction"
+          },
+          "property": {
+            "$ref": "#/components/schemas/PropertyOut"
+          },
+          "publisher": {
+            "title": "Publisher",
+            "type": "string"
+          },
+          "removed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Removed At"
+          },
+          "rooms": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rooms"
+          },
+          "source_item_id": {
+            "title": "Source Item Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "unit_identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit Identifier"
+          },
+          "upstream_provider_key": {
+            "title": "Upstream Provider Key",
+            "type": "string"
+          },
+          "upstream_provider_name": {
+            "title": "Upstream Provider Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "source_item_id",
+          "publisher",
+          "upstream_provider_key",
+          "upstream_provider_name",
+          "unit_identifier",
+          "rooms",
+          "area_m2",
+          "new_construction",
+          "canonical_url",
+          "monthly_rent",
+          "application_deadline",
+          "available_from",
+          "categories",
+          "data_mode",
+          "attribution",
+          "status",
+          "first_seen_at",
+          "last_seen_at",
+          "removed_at",
+          "property"
+        ],
+        "title": "RentalListingOut",
+        "type": "object"
+      },
+      "RentalProjectList": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RentalProjectOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "RentalProjectList",
+        "type": "object"
+      },
+      "RentalProjectOut": {
+        "properties": {
+          "active_listing_count": {
+            "title": "Active Listing Count",
+            "type": "integer"
+          },
+          "address": {
+            "title": "Address",
+            "type": "string"
+          },
+          "area_max": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Area Max"
+          },
+          "area_min": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Area Min"
+          },
+          "attribution": {
+            "title": "Attribution",
+            "type": "string"
+          },
+          "available_from": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Available From"
+          },
+          "canonical_url": {
+            "title": "Canonical Url",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "data_mode": {
+            "title": "Data Mode",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "imported_listing_count": {
+            "title": "Imported Listing Count",
+            "type": "integer"
+          },
+          "last_seen_at": {
+            "format": "date-time",
+            "title": "Last Seen At",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "planned_unit_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Unit Count"
+          },
+          "rent_max": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rent Max"
+          },
+          "rent_min": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rent Min"
+          },
+          "rooms_max": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rooms Max"
+          },
+          "rooms_min": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rooms Min"
+          },
+          "source_item_id": {
+            "title": "Source Item Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "upstream_provider_key": {
+            "title": "Upstream Provider Key",
+            "type": "string"
+          },
+          "upstream_provider_name": {
+            "title": "Upstream Provider Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "source_item_id",
+          "name",
+          "canonical_url",
+          "upstream_provider_key",
+          "upstream_provider_name",
+          "address",
+          "city",
+          "planned_unit_count",
+          "active_listing_count",
+          "imported_listing_count",
+          "rent_min",
+          "rent_max",
+          "rooms_min",
+          "rooms_max",
+          "area_min",
+          "area_max",
+          "available_from",
+          "status",
+          "data_mode",
+          "attribution",
+          "last_seen_at"
+        ],
+        "title": "RentalProjectOut",
+        "type": "object"
+      },
+      "ScoreActivationSetOut": {
+        "properties": {
+          "activations": {
+            "items": {
+              "$ref": "#/components/schemas/ActivatedScoreDefinitionOut"
+            },
+            "title": "Activations",
+            "type": "array"
+          },
+          "as_of_date": {
+            "format": "date",
+            "title": "As Of Date",
+            "type": "string"
+          },
+          "city_id": {
+            "title": "City Id",
+            "type": "integer"
+          },
+          "decision_run_id": {
+            "format": "uuid",
+            "title": "Decision Run Id",
+            "type": "string"
+          },
+          "scope_key": {
+            "title": "Scope Key",
+            "type": "string"
+          },
+          "scope_type": {
+            "const": "INTERNAL_PILOT",
+            "title": "Scope Type",
+            "type": "string"
+          },
+          "serving_mode": {
+            "const": "INTERNAL_PILOT",
+            "default": "INTERNAL_PILOT",
+            "title": "Serving Mode",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scope_type",
+          "scope_key",
+          "city_id",
+          "decision_run_id",
+          "as_of_date",
+          "activations"
+        ],
+        "title": "ScoreActivationSetOut",
+        "type": "object"
+      },
+      "ScoreDefinitionOut": {
+        "properties": {
+          "definition_revision": {
+            "title": "Definition Revision",
+            "type": "string"
+          },
+          "dimension": {
+            "title": "Dimension",
+            "type": "string"
+          },
+          "engine_revision": {
+            "title": "Engine Revision",
+            "type": "string"
+          },
+          "feature_schema_revision": {
+            "title": "Feature Schema Revision",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "parameter_hash": {
+            "title": "Parameter Hash",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "dimension",
+          "definition_revision",
+          "parameter_hash",
+          "feature_schema_revision",
+          "engine_revision",
+          "status"
+        ],
+        "title": "ScoreDefinitionOut",
+        "type": "object"
+      },
+      "ScoreRunOut": {
+        "properties": {
+          "as_of_date": {
+            "format": "date",
+            "title": "As Of Date",
+            "type": "string"
+          },
+          "city_id": {
+            "title": "City Id",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "definition_set_hash": {
+            "title": "Definition Set Hash",
+            "type": "string"
+          },
+          "feature_schema_revision": {
+            "title": "Feature Schema Revision",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "population_fingerprint": {
+            "title": "Population Fingerprint",
+            "type": "string"
+          },
+          "population_size": {
+            "title": "Population Size",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "city_id",
+          "as_of_date",
+          "feature_schema_revision",
+          "definition_set_hash",
+          "population_fingerprint",
+          "population_size",
+          "status",
+          "created_at"
+        ],
+        "title": "ScoreRunOut",
+        "type": "object"
+      },
+      "SignalDimensionEvaluationOut": {
+        "properties": {
+          "components": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Components",
+            "type": "array"
+          },
+          "definition": {
+            "$ref": "#/components/schemas/ScoreDefinitionOut"
+          },
+          "dimension": {
+            "title": "Dimension",
+            "type": "string"
+          },
+          "score": {
+            "title": "Score",
+            "type": "integer"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "dimension",
+          "score",
+          "components",
+          "warnings",
+          "definition"
+        ],
+        "title": "SignalDimensionEvaluationOut",
+        "type": "object"
+      },
+      "SignalDimensionSetOut": {
+        "properties": {
+          "as_of_date": {
+            "format": "date",
+            "title": "As Of Date",
+            "type": "string"
+          },
+          "dimensions": {
+            "items": {
+              "$ref": "#/components/schemas/SignalDimensionEvaluationOut"
+            },
+            "title": "Dimensions",
+            "type": "array"
+          },
+          "feature_snapshot_hash": {
+            "title": "Feature Snapshot Hash",
+            "type": "string"
+          },
+          "feature_snapshot_id": {
+            "format": "uuid",
+            "title": "Feature Snapshot Id",
+            "type": "string"
+          },
+          "run_id": {
+            "format": "uuid",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "signal_id": {
+            "format": "uuid",
+            "title": "Signal Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "signal_id",
+          "as_of_date",
+          "feature_snapshot_id",
+          "feature_snapshot_hash",
+          "dimensions"
+        ],
+        "title": "SignalDimensionSetOut",
+        "type": "object"
+      },
+      "SignalList": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SignalOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "SignalList",
+        "type": "object"
+      },
+      "SignalOut": {
+        "properties": {
+          "active_dimensions": {
+            "$ref": "#/components/schemas/ActiveDimensionsOut"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "estimated_move_from": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Move From"
+          },
+          "estimated_move_to": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Move To"
+          },
+          "evidence": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/EvidenceOut"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "evidence_count": {
+            "title": "Evidence Count",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "property": {
+            "$ref": "#/components/schemas/PropertyOut"
+          },
+          "property_id": {
+            "format": "uuid",
+            "title": "Property Id",
+            "type": "string"
+          },
+          "signal_type": {
+            "title": "Signal Type",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "timing": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SignalTimingOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "property_id",
+          "signal_type",
+          "status",
+          "active_dimensions",
+          "estimated_move_from",
+          "estimated_move_to",
+          "created_at",
+          "updated_at",
+          "property",
+          "evidence_count"
+        ],
+        "title": "SignalOut",
+        "type": "object"
+      },
+      "SignalOutcomeOut": {
+        "properties": {
+          "confidence": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Confidence",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "dedupe_key": {
+            "title": "Dedupe Key",
+            "type": "string"
+          },
+          "event_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Id"
+          },
+          "evidence": {
+            "additionalProperties": true,
+            "title": "Evidence",
+            "type": "object"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "listing_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Listing Id"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "outcome_type": {
+            "title": "Outcome Type",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "signal_id": {
+            "format": "uuid",
+            "title": "Signal Id",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "verification_level": {
+            "title": "Verification Level",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "signal_id",
+          "listing_id",
+          "event_id",
+          "outcome_type",
+          "subject",
+          "verification_level",
+          "observed_at",
+          "confidence",
+          "evidence",
+          "rule_version",
+          "dedupe_key",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "SignalOutcomeOut",
+        "type": "object"
+      },
+      "SignalTimingOut": {
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/TimingFactOut"
+            },
+            "title": "Facts",
+            "type": "array"
+          },
+          "mode": {
+            "title": "Mode",
+            "type": "string"
+          },
+          "primary": {
+            "$ref": "#/components/schemas/TimingFactOut"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "primary",
+          "facts",
+          "mode",
+          "as_of",
+          "warnings"
+        ],
+        "title": "SignalTimingOut",
+        "type": "object"
+      },
+      "SignalValidationOut": {
+        "properties": {
+          "classification_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Classification Tags",
+            "type": "array"
+          },
+          "data_confidence_at_selection": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data Confidence At Selection"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "inclusion_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Inclusion Reasons",
+            "type": "array"
+          },
+          "issue_codes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Issue Codes",
+            "type": "array"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "provider_keys": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Provider Keys",
+            "type": "array"
+          },
+          "review_status": {
+            "title": "Review Status",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer"
+          },
+          "score_at_selection": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score At Selection"
+          },
+          "score_stratum": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score Stratum"
+          },
+          "signal_id": {
+            "format": "uuid",
+            "title": "Signal Id",
+            "type": "string"
+          },
+          "signal_strength_at_selection": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signal Strength At Selection"
+          },
+          "source_keys": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Keys",
+            "type": "array"
+          },
+          "strength_stratum": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Stratum"
+          },
+          "timing_at_selection": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timing At Selection"
+          },
+          "verdict": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verdict"
+          }
+        },
+        "required": [
+          "id",
+          "signal_id",
+          "score_at_selection",
+          "score_stratum",
+          "signal_strength_at_selection",
+          "data_confidence_at_selection",
+          "timing_at_selection",
+          "strength_stratum",
+          "inclusion_reasons",
+          "source_keys",
+          "provider_keys",
+          "classification_tags",
+          "review_status",
+          "verdict",
+          "issue_codes",
+          "notes",
+          "reviewer",
+          "reviewed_at"
+        ],
+        "title": "SignalValidationOut",
+        "type": "object"
+      },
+      "SourceOut": {
+        "properties": {
+          "access_method": {
+            "title": "Access Method",
+            "type": "string"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "last_run_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Run At"
+          },
+          "last_success_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Success At"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "next_run_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Run At"
+          },
+          "poll_interval_minutes": {
+            "title": "Poll Interval Minutes",
+            "type": "integer"
+          },
+          "scope": {
+            "title": "Scope",
+            "type": "string"
+          },
+          "source_type": {
+            "title": "Source Type",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "name",
+          "source_type",
+          "scope",
+          "access_method",
+          "enabled",
+          "status",
+          "last_run_at",
+          "last_success_at",
+          "next_run_at",
+          "poll_interval_minutes"
+        ],
+        "title": "SourceOut",
+        "type": "object"
+      },
+      "SourceRunOut": {
+        "properties": {
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "completeness_rule_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completeness Rule Version"
+          },
+          "duration_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Ms"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          },
+          "execution_status": {
+            "title": "Execution Status",
+            "type": "string"
+          },
+          "hit_result_limit": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hit Result Limit"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "inventory_scope_complete": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inventory Scope Complete"
+          },
+          "items_changed": {
+            "title": "Items Changed",
+            "type": "integer"
+          },
+          "items_new": {
+            "title": "Items New",
+            "type": "integer"
+          },
+          "items_received": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Items Received"
+          },
+          "items_removed": {
+            "title": "Items Removed",
+            "type": "integer"
+          },
+          "items_reported": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Items Reported"
+          },
+          "items_seen": {
+            "title": "Items Seen",
+            "type": "integer"
+          },
+          "items_unchanged": {
+            "title": "Items Unchanged",
+            "type": "integer"
+          },
+          "pages_expected": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages Expected"
+          },
+          "pages_received": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages Received"
+          },
+          "pagination_complete": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pagination Complete"
+          },
+          "removal_candidates": {
+            "title": "Removal Candidates",
+            "type": "integer"
+          },
+          "requests_attempted": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requests Attempted"
+          },
+          "requests_failed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requests Failed"
+          },
+          "requests_succeeded": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requests Succeeded"
+          },
+          "snapshot_evidence": {
+            "additionalProperties": true,
+            "title": "Snapshot Evidence",
+            "type": "object"
+          },
+          "snapshot_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Snapshot Reasons",
+            "type": "array"
+          },
+          "snapshot_status": {
+            "title": "Snapshot Status",
+            "type": "string"
+          },
+          "source_id": {
+            "format": "uuid",
+            "title": "Source Id",
+            "type": "string"
+          },
+          "source_name": {
+            "title": "Source Name",
+            "type": "string"
+          },
+          "started_at": {
+            "format": "date-time",
+            "title": "Started At",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "trigger_type": {
+            "title": "Trigger Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "source_name",
+          "status",
+          "execution_status",
+          "trigger_type",
+          "snapshot_status",
+          "started_at",
+          "completed_at",
+          "items_seen",
+          "items_new",
+          "items_changed",
+          "items_unchanged",
+          "removal_candidates",
+          "items_removed",
+          "requests_attempted",
+          "requests_succeeded",
+          "requests_failed",
+          "pages_expected",
+          "pages_received",
+          "items_reported",
+          "items_received",
+          "pagination_complete",
+          "hit_result_limit",
+          "inventory_scope_complete",
+          "snapshot_reasons",
+          "snapshot_evidence",
+          "completeness_rule_version",
+          "duration_ms",
+          "error_message"
+        ],
+        "title": "SourceRunOut",
+        "type": "object"
+      },
+      "SpatialFeatureList": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SpatialFeatureOut"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "count"
+        ],
+        "title": "SpatialFeatureList",
+        "type": "object"
+      },
+      "SpatialFeatureOut": {
+        "properties": {
+          "activity_code": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activity Code"
+          },
+          "activity_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activity Label"
+          },
+          "attribution": {
+            "title": "Attribution",
+            "type": "string"
+          },
+          "data_mode": {
+            "title": "Data Mode",
+            "type": "string"
+          },
+          "dataset_key": {
+            "title": "Dataset Key",
+            "type": "string"
+          },
+          "feature_type": {
+            "title": "Feature Type",
+            "type": "string"
+          },
+          "geometry": {
+            "additionalProperties": true,
+            "title": "Geometry",
+            "type": "object"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_baseline": {
+            "title": "Is Baseline",
+            "type": "boolean"
+          },
+          "municipality_code": {
+            "title": "Municipality Code",
+            "type": "string"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_item_id": {
+            "title": "Source Item Id",
+            "type": "string"
+          },
+          "source_modified_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Modified At"
+          },
+          "status_code": {
+            "title": "Status Code",
+            "type": "integer"
+          },
+          "status_label": {
+            "title": "Status Label",
+            "type": "string"
+          },
+          "subtype_code": {
+            "title": "Subtype Code",
+            "type": "integer"
+          },
+          "subtype_label": {
+            "title": "Subtype Label",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "source",
+          "data_mode",
+          "dataset_key",
+          "source_item_id",
+          "municipality_code",
+          "feature_type",
+          "subtype_code",
+          "subtype_label",
+          "status_code",
+          "status_label",
+          "activity_code",
+          "activity_label",
+          "source_modified_at",
+          "geometry",
+          "attribution",
+          "is_baseline",
+          "observed_at",
+          "updated_at"
+        ],
+        "title": "SpatialFeatureOut",
+        "type": "object"
+      },
+      "TimingFactOut": {
+        "properties": {
+          "conflicting_dates": {
+            "items": {
+              "format": "date",
+              "type": "string"
+            },
+            "title": "Conflicting Dates",
+            "type": "array"
+          },
+          "date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date"
+          },
+          "observation_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Observation Ids",
+            "type": "array"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "type",
+          "state",
+          "date",
+          "observation_ids",
+          "conflicting_dates",
+          "warnings"
+        ],
+        "title": "TimingFactOut",
+        "type": "object"
+      },
+      "ValidationBatchOut": {
+        "properties": {
+          "city_id": {
+            "title": "City Id",
+            "type": "integer"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "definition_set_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Definition Set Hash"
+          },
+          "dimension_scope_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dimension Scope Key"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "issue_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Issue Counts",
+            "type": "object"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SignalValidationOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "pending_count": {
+            "title": "Pending Count",
+            "type": "integer"
+          },
+          "population_size": {
+            "title": "Population Size",
+            "type": "integer"
+          },
+          "reviewed_count": {
+            "title": "Reviewed Count",
+            "type": "integer"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "score_as_of_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score As Of Date"
+          },
+          "score_run_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score Run Id"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "string"
+          },
+          "selection_manifest": {
+            "additionalProperties": true,
+            "title": "Selection Manifest",
+            "type": "object"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "target_size": {
+            "title": "Target Size",
+            "type": "integer"
+          },
+          "verdict_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Verdict Counts",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "city_id",
+          "rule_version",
+          "dimension_scope_key",
+          "score_run_id",
+          "score_as_of_date",
+          "definition_set_hash",
+          "seed",
+          "target_size",
+          "population_size",
+          "status",
+          "reviewed_count",
+          "pending_count",
+          "verdict_counts",
+          "issue_counts",
+          "created_at",
+          "completed_at",
+          "selection_manifest",
+          "items"
+        ],
+        "title": "ValidationBatchOut",
+        "type": "object"
+      },
+      "ValidationBatchSummaryOut": {
+        "properties": {
+          "city_id": {
+            "title": "City Id",
+            "type": "integer"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "definition_set_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Definition Set Hash"
+          },
+          "dimension_scope_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dimension Scope Key"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "issue_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Issue Counts",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "pending_count": {
+            "title": "Pending Count",
+            "type": "integer"
+          },
+          "population_size": {
+            "title": "Population Size",
+            "type": "integer"
+          },
+          "reviewed_count": {
+            "title": "Reviewed Count",
+            "type": "integer"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "score_as_of_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score As Of Date"
+          },
+          "score_run_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score Run Id"
+          },
+          "seed": {
+            "title": "Seed",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "target_size": {
+            "title": "Target Size",
+            "type": "integer"
+          },
+          "verdict_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Verdict Counts",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "city_id",
+          "rule_version",
+          "dimension_scope_key",
+          "score_run_id",
+          "score_as_of_date",
+          "definition_set_hash",
+          "seed",
+          "target_size",
+          "population_size",
+          "status",
+          "reviewed_count",
+          "pending_count",
+          "verdict_counts",
+          "issue_counts",
+          "created_at",
+          "completed_at"
+        ],
+        "title": "ValidationBatchSummaryOut",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "FlyttSignal API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/cities": {
+      "get": {
+        "operationId": "listCities",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CityOut"
+                  },
+                  "title": "Response Listcities",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Cities"
+      }
+    },
+    "/api/health": {
+      "get": {
+        "operationId": "checkHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Checkhealth",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Check Health"
+      }
+    },
+    "/api/housing-providers": {
+      "get": {
+        "operationId": "listHousingProviders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city_id",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "City Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HousingProviderList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Housing Providers"
+      }
+    },
+    "/api/measurements/lead-time": {
+      "get": {
+        "operationId": "getLeadTimeSummary",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "source_key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source Key"
+            }
+          },
+          {
+            "in": "query",
+            "name": "classification_tag",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Classification Tag"
+            }
+          },
+          {
+            "in": "query",
+            "name": "listing_status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "ACTIVE",
+                    "REMOVAL_CANDIDATE",
+                    "REMOVED"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "ACTIVE",
+              "title": "Listing Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadTimeSummaryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Lead Time Summary"
+      }
+    },
+    "/api/outcomes/summary": {
+      "get": {
+        "operationId": "getOutcomeSummary",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutcomeSummaryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Get Outcome Summary"
+      }
+    },
+    "/api/pilot/activity": {
+      "put": {
+        "operationId": "recordPilotActivity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PilotActivityUpsert"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotActivityRecordedOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Record Pilot Activity"
+      }
+    },
+    "/api/pilot/metrics": {
+      "get": {
+        "operationId": "getPilotMetrics",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pilot_key",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "pattern": "^[a-z0-9][a-z0-9_-]+$",
+              "title": "Pilot Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cohort_version",
+            "required": true,
+            "schema": {
+              "title": "Cohort Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cohort_as_of_date",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Cohort As Of Date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dimension_scope_key",
+            "required": true,
+            "schema": {
+              "title": "Dimension Scope Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "score_run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Score Run Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "score_as_of_date",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Score As Of Date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "definition_set_hash",
+            "required": true,
+            "schema": {
+              "title": "Definition Set Hash",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotMetricsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Pilot Metrics"
+      }
+    },
+    "/api/pilot/signals": {
+      "get": {
+        "operationId": "listPilotSignals",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "as_of",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "As Of"
+            }
+          },
+          {
+            "in": "query",
+            "name": "address_query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Address Query"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pilot_key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 80,
+                  "minLength": 2,
+                  "pattern": "^[a-z0-9][a-z0-9_-]+$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Pilot Key"
+            }
+          },
+          {
+            "in": "query",
+            "name": "review_status",
+            "required": false,
+            "schema": {
+              "default": "ALL",
+              "enum": [
+                "ALL",
+                "REVIEWED",
+                "UNREVIEWED"
+              ],
+              "title": "Review Status",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "strength_band",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Strength Band"
+            }
+          },
+          {
+            "in": "query",
+            "name": "signal_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Signal Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "property_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Property Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "min_rooms",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "minimum": 0.0,
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Min Rooms"
+            }
+          },
+          {
+            "in": "query",
+            "name": "max_rooms",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "minimum": 0.0,
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Max Rooms"
+            }
+          },
+          {
+            "in": "query",
+            "name": "min_area_m2",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "minimum": 0.0,
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Min Area M2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "max_area_m2",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "minimum": 0.0,
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Max Area M2"
+            }
+          },
+          {
+            "in": "query",
+            "name": "center_latitude",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 90.0,
+                  "minimum": -90.0,
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Center Latitude"
+            }
+          },
+          {
+            "in": "query",
+            "name": "center_longitude",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 180.0,
+                  "minimum": -180.0,
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Center Longitude"
+            }
+          },
+          {
+            "in": "query",
+            "name": "radius_km",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "exclusiveMinimum": 0.0,
+                  "maximum": 100.0,
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Radius Km"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "PRIORITY",
+              "enum": [
+                "PRIORITY",
+                "MOVE_WINDOW",
+                "NEWEST"
+              ],
+              "title": "Sort",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 500,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotSignalListOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Pilot Signals"
+      }
+    },
+    "/api/pilot/signals/{signal_id}/feedback": {
+      "get": {
+        "operationId": "getPilotSignalFeedback",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "signal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Signal Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pilot_key",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "pattern": "^[a-z0-9][a-z0-9_-]+$",
+              "title": "Pilot Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cohort_version",
+            "required": true,
+            "schema": {
+              "title": "Cohort Version",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cohort_as_of_date",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Cohort As Of Date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dimension_scope_key",
+            "required": true,
+            "schema": {
+              "title": "Dimension Scope Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "score_run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Score Run Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "score_as_of_date",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Score As Of Date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "definition_set_hash",
+            "required": true,
+            "schema": {
+              "title": "Definition Set Hash",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/PilotFeedbackOut"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Getpilotsignalfeedback"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Pilot Signal Feedback"
+      },
+      "put": {
+        "operationId": "upsertPilotSignalFeedback",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "signal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Signal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PilotFeedbackUpsert"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotFeedbackOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Upsert Pilot Signal Feedback"
+      }
+    },
+    "/api/properties/{property_id}": {
+      "get": {
+        "operationId": "getProperty",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "property_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Property Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Property"
+      }
+    },
+    "/api/quality/summary": {
+      "get": {
+        "operationId": "getQualitySummary",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city_id",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "City Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QualitySummaryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Quality Summary"
+      }
+    },
+    "/api/rental-coverage": {
+      "get": {
+        "operationId": "getRentalCoverage",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city_id",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "City Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentalCoverageOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Rental Coverage"
+      }
+    },
+    "/api/rental-listings": {
+      "get": {
+        "operationId": "listRentalListings",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": "ACTIVE",
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "provider",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Provider"
+            }
+          },
+          {
+            "in": "query",
+            "name": "data_mode",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "fixture",
+                    "live"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Data Mode"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 500,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentalListingList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Rental Listings"
+      }
+    },
+    "/api/rental-listings/{listing_id}/classifications": {
+      "get": {
+        "operationId": "listRentalListingClassifications",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "listing_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Listing Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RentalListingClassificationOut"
+                  },
+                  "title": "Response Listrentallistingclassifications",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Rental Listing Classifications"
+      }
+    },
+    "/api/rental-listings/{listing_id}/measurements": {
+      "get": {
+        "operationId": "listRentalListingMeasurements",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "listing_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Listing Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ListingMeasurementOut"
+                  },
+                  "title": "Response Listrentallistingmeasurements",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Rental Listing Measurements"
+      }
+    },
+    "/api/rental-projects": {
+      "get": {
+        "operationId": "listRentalProjects",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city",
+            "required": false,
+            "schema": {
+              "default": "Uppsala",
+              "title": "City",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentalProjectList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Rental Projects"
+      }
+    },
+    "/api/score-activations/{scope_key}": {
+      "get": {
+        "operationId": "getScoreActivationSet",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scope_key",
+            "required": true,
+            "schema": {
+              "title": "Scope Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "city_id",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "City Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScoreActivationSetOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Score Activation Set"
+      }
+    },
+    "/api/score-activations/{scope_key}/signals/{signal_id}": {
+      "get": {
+        "operationId": "getActiveSignalDimensions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scope_key",
+            "required": true,
+            "schema": {
+              "title": "Scope Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "signal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Signal Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "city_id",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "title": "City Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignalDimensionSetOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Active Signal Dimensions"
+      }
+    },
+    "/api/score-runs": {
+      "get": {
+        "operationId": "listScoreRuns",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "City Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ScoreRunOut"
+                  },
+                  "title": "Response Listscoreruns",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Score Runs"
+      }
+    },
+    "/api/score-runs/{run_id}": {
+      "get": {
+        "operationId": "getScoreRun",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScoreRunOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Score Run"
+      }
+    },
+    "/api/score-runs/{run_id}/signals/{signal_id}": {
+      "get": {
+        "operationId": "getScoreRunSignalDimensions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "signal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Signal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignalDimensionSetOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Score Run Signal Dimensions"
+      }
+    },
+    "/api/signals": {
+      "get": {
+        "operationId": "listSignals",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "city_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "City Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "min_strength",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 100,
+              "minimum": 0,
+              "title": "Min Strength",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "signal_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Signal Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 500,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignalList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Signals"
+      }
+    },
+    "/api/signals/{signal_id}": {
+      "get": {
+        "operationId": "getSignal",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "signal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Signal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Signal"
+      }
+    },
+    "/api/signals/{signal_id}/outcomes": {
+      "get": {
+        "operationId": "listSignalOutcomes",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "signal_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Signal Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SignalOutcomeOut"
+                  },
+                  "title": "Response Listsignaloutcomes",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Signal Outcomes"
+      }
+    },
+    "/api/source-runs": {
+      "get": {
+        "operationId": "listSourceRuns",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "source_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "RUNNING",
+                    "SUCCESS",
+                    "FAILED"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SourceRunOut"
+                  },
+                  "title": "Response Listsourceruns",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Source Runs"
+      }
+    },
+    "/api/sources": {
+      "get": {
+        "operationId": "listSources",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SourceOut"
+                  },
+                  "title": "Response Listsources",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Sources"
+      }
+    },
+    "/api/sources/{source_key}/lifecycle-readiness": {
+      "get": {
+        "operationId": "getSourceLifecycleReadiness",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "source_key",
+            "required": true,
+            "schema": {
+              "title": "Source Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LifecycleReadinessOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Source Lifecycle Readiness"
+      }
+    },
+    "/api/spatial-features": {
+      "get": {
+        "operationId": "listSpatialFeatures",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 500,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SpatialFeatureList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Spatial Features"
+      }
+    },
+    "/api/validation-batches": {
+      "get": {
+        "operationId": "listValidationBatches",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationBatchSummaryOut"
+                  },
+                  "title": "Response Listvalidationbatches",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Validation Batches"
+      }
+    },
+    "/api/validation-batches/{batch_id}": {
+      "get": {
+        "operationId": "getValidationBatch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationBatchOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Validation Batch"
+      }
+    }
+  }
+}
