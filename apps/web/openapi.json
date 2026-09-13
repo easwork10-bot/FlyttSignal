@@ -3221,9 +3221,16 @@
             "type": "string"
           },
           "signal_id": {
-            "format": "uuid",
-            "title": "Signal Id",
-            "type": "string"
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signal Id"
           },
           "subject": {
             "title": "Subject",

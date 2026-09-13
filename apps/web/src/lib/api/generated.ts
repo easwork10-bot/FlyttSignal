@@ -1747,11 +1747,8 @@ export interface components {
             outcome_type: string;
             /** Rule Version */
             rule_version: string;
-            /**
-             * Signal Id
-             * Format: uuid
-             */
-            signal_id: string;
+            /** Signal Id */
+            signal_id: string | null;
             /** Subject */
             subject: string;
             /**

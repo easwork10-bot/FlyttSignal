@@ -70,6 +70,14 @@ Commercial attributes (area, rooms, rent) cannot strengthen the move hypothesis.
 
 Current product prioritization consumes a complete explicitly activated dimension run. Collection does not silently activate new scores. The pilot fails closed with 409 when the activation context is incomplete. Model evaluation, activation authority, signal state and product eligibility are separate.
 
+Current rental scoring inputs exclude held legacy properties and legacy-only signals.
+Eligible inputs require a current potential tenancy-change or potential new-build signal,
+consistent construction facts, and temporally valid RENTAL_LISTED evidence linked to the
+same property's live listing and retained source raw item. Derived event edges do not
+contribute. Turnover is not admitted by this listing-only path without a separate
+validated evidence contract. Historical snapshots/runs and held database rows are preserved;
+changing current input eligibility does not rewrite or reactivate old score runs.
+
 Pilot feedback/activity preserves exactly the cohort, run, definition hash and dimensions shown. Repeated views do not inflate unique shown/opened counts. Reviews are not confirmed moves or independent ground truth merely because an AI performed them.
 
 ## Frontend and operational boundaries

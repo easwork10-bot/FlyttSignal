@@ -7,7 +7,7 @@ from pydantic import BaseModel, ConfigDict
 
 class SignalOutcomeOut(BaseModel):
     id: uuid.UUID
-    signal_id: uuid.UUID
+    signal_id: uuid.UUID | None
     listing_id: uuid.UUID | None
     event_id: uuid.UUID | None
     outcome_type: str

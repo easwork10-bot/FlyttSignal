@@ -63,7 +63,7 @@ def apply_listing_lifecycle(
     listings = session.scalars(
         select(RentalListing).where(
             RentalListing.source_id == source.id,
-            RentalListing.data_mode == "live",
+            (RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False),
             RentalListing.status.in_(("ACTIVE", "REMOVAL_CANDIDATE")),
         )
     )

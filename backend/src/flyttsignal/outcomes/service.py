@@ -62,6 +62,7 @@ def _signal_links_for_listing(session: Session, listing: RentalListing) -> list[
             .join(Event, SignalEvidence.event_id == Event.id)
             .where(
                 Event.raw_item_id == listing.raw_item_id,
+                Event.is_historical.is_(False),
                 SignalEvidence.superseded_at.is_(None),
             )
         ).tuples()
@@ -132,7 +133,11 @@ def record_cross_source_outcome(
             )
             .select_from(SignalEvidence)
             .join(Event, SignalEvidence.event_id == Event.id)
-            .outerjoin(RentalListing, RentalListing.raw_item_id == Event.raw_item_id)
+            .outerjoin(
+                RentalListing,
+                (RentalListing.raw_item_id == Event.raw_item_id)
+                & (RentalListing.is_historical == Event.is_historical),
+            )
             .where(
                 SignalEvidence.signal_id == signal_id,
                 SignalEvidence.superseded_at.is_(None),

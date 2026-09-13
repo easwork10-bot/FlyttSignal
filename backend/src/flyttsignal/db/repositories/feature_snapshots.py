@@ -7,13 +7,14 @@ from datetime import date, datetime
 from zoneinfo import ZoneInfo
 
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, aliased
 
 from flyttsignal.db.models import (
     Address,
     Event,
     ListingMeasurement,
     Property,
+    RawItem,
     RentalListing,
     RentalListingClassification,
     Signal,
@@ -23,7 +24,9 @@ from flyttsignal.db.models import (
     Source,
     SourceRun,
 )
+from flyttsignal.domains.events.models import EventType
 from flyttsignal.domains.properties.matching import resolve_current_property_match
+from flyttsignal.domains.signals.models import SignalType
 from flyttsignal.domains.signals.snapshots import (
     FEATURE_SCHEMA_REVISION,
     FeatureSnapshot,
@@ -60,23 +63,59 @@ class FeatureSnapshotRepository:
                 "historical replay requires an already persisted snapshot"
             )
 
+        held = aliased(Signal)
+        held_property = (
+            select(held.id)
+            .where(
+                held.property_id == Signal.property_id,
+                held.superseded_at.is_(None),
+                held.signal_type.in_(
+                    (SignalType.LIKELY_TENANT_MOVE_OUT, SignalType.NEW_BUILD_MOVE_IN)
+                ),
+            )
+            .exists()
+        )
         rows = self.session.execute(
             select(Signal, Property, Address, Event, RentalListing, Source.key)
             .join(Property, Property.id == Signal.property_id)
             .join(Address, Address.id == Property.address_id)
             .join(SignalEvidence, SignalEvidence.signal_id == Signal.id)
             .join(Event, Event.id == SignalEvidence.event_id)
-            .join(RentalListing, RentalListing.raw_item_id == Event.raw_item_id)
+            .join(
+                RentalListing,
+                (RentalListing.raw_item_id == Event.raw_item_id)
+                & (RentalListing.is_historical == Event.is_historical),
+            )
+            .join(RawItem, RawItem.id == Event.raw_item_id)
             .join(Source, Source.id == Event.source_id)
             .where(
                 Signal.status == "ACTIVE",
                 Signal.current(),
+                # Current rental scoring admits factual listing evidence only.
+                # Held lineages and historical captures remain untouched.
+                ~held_property,
+                (
+                    (Signal.signal_type == SignalType.POTENTIAL_RENTAL_TENANCY_CHANGE)
+                    & RentalListing.new_construction.is_not(True)
+                    | (Signal.signal_type == SignalType.POTENTIAL_NEW_BUILD_MOVE_IN)
+                    & RentalListing.new_construction.is_(True)
+                ),
+                Event.event_type == EventType.RENTAL_LISTED,
+                Event.is_historical.is_(False),
+                Event.observed_at <= captured_at,
+                Event.property_id == Signal.property_id,
+                RentalListing.property_id == Signal.property_id,
+                RentalListing.source_id == Event.source_id,
+                RawItem.source_id == Event.source_id,
+                RawItem.source_item_id == RentalListing.source_item_id,
+                RawItem.raw_payload.is_not(None),
+                RawItem.content_hash.is_not(None),
                 SignalEvidence.valid_from <= captured_at,
                 (
                     SignalEvidence.superseded_at.is_(None)
                     | (SignalEvidence.superseded_at > captured_at)
                 ),
-                RentalListing.data_mode == "live",
+                (RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False),
                 Address.city_id == city_id,
             )
             .order_by(Signal.id, Event.id)
@@ -344,9 +383,7 @@ def _build_snapshot(
             [event.event_type for event in events], missing_reason="no linked event type"
         ),
         "classification_tags": (
-            value_set(
-                [tag for listing in listings for tag in classifications.get(listing.id, [])]
-            )
+            value_set([tag for listing in listings for tag in classifications.get(listing.id, [])])
             if any(classifications.get(listing.id) for listing in listings)
             else missing("no stored listing classification")
         ),
@@ -397,9 +434,7 @@ def _build_snapshot(
             address.geometry is not None
             or (address.latitude is not None and address.longitude is not None)
         ),
-        "distance_to_service_base_km": unavailable(
-            "requires a moving-company service base"
-        ),
+        "distance_to_service_base_km": unavailable("requires a moving-company service base"),
         "source_id": scalar(
             [event.source_id for event in events], missing_reason="source identity is missing"
         ),

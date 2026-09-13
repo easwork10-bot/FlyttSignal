@@ -48,16 +48,17 @@ class ValidationRepository:
             .join(active_dimensions, active_dimensions.c.signal_id == Signal.id)
             .join(SignalEvidence, SignalEvidence.signal_id == Signal.id)
             .join(Event, Event.id == SignalEvidence.event_id)
-            .join(RentalListing, RentalListing.raw_item_id == Event.raw_item_id)
+            .join(
+                RentalListing,
+                (RentalListing.raw_item_id == Event.raw_item_id)
+                & (RentalListing.is_historical == Event.is_historical),
+            )
             .where(
                 Signal.status == "ACTIVE",
                 Signal.current(),
                 SignalEvidence.valid_from <= as_of,
-                (
-                    SignalEvidence.superseded_at.is_(None)
-                    | (SignalEvidence.superseded_at > as_of)
-                ),
-                RentalListing.data_mode == "live",
+                (SignalEvidence.superseded_at.is_(None) | (SignalEvidence.superseded_at > as_of)),
+                (RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False),
                 RentalListing.status == "ACTIVE",
                 Address.city_id == city_id,
             )
@@ -122,7 +123,7 @@ class ValidationRepository:
             .join(Property, Property.id == RentalListing.property_id)
             .join(Address, Address.id == Property.address_id)
             .where(
-                RentalListing.data_mode == "live",
+                (RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False),
                 RentalListing.status == "ACTIVE",
                 Address.city_id == city_id,
             )

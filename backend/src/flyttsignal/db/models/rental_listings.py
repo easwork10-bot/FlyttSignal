@@ -9,12 +9,14 @@ from sqlalchemy import (
     Date,
     DateTime,
     ForeignKey,
+    Index,
     Integer,
     Numeric,
     String,
     Text,
     UniqueConstraint,
     func,
+    text,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -29,7 +31,17 @@ class RentalListing(Base):
     """Current normalized listing state; RawItem remains the immutable provenance boundary."""
 
     __tablename__ = "rental_listings"
-    __table_args__ = (UniqueConstraint("source_id", "source_item_id"),)
+    __table_args__ = (
+        Index(
+            "uq_current_rental_listing_source_item",
+            "source_id",
+            "source_item_id",
+            unique=True,
+            postgresql_where=text("NOT is_historical"),
+            sqlite_where=text("NOT is_historical"),
+        ),
+    )
+    is_historical: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
     id: Mapped[uuid.UUID] = uuid_pk()
     source_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("sources.id"))
     raw_item_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("raw_items.id"))
@@ -82,9 +94,7 @@ class RentalListingRevision(Base):
         UniqueConstraint("listing_id", "revision_number"),
         UniqueConstraint("listing_id", "operation_key"),
         CheckConstraint("revision_number > 0"),
-        CheckConstraint(
-            "change_kind IN ('CONTENT_OBSERVED','LISTING_REMOVED','LISTING_RELISTED')"
-        ),
+        CheckConstraint("change_kind IN ('CONTENT_OBSERVED','LISTING_REMOVED','LISTING_RELISTED')"),
         CheckConstraint("provenance_kind IN ('DIRECT','RECONSTRUCTED')"),
     )
     id: Mapped[uuid.UUID] = uuid_pk()
@@ -97,9 +107,7 @@ class RentalListingRevision(Base):
     provenance_kind: Mapped[str] = mapped_column(String(20))
     valid_from: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     content_hash: Mapped[str | None] = mapped_column(String(64))
-    raw_payload: Mapped[dict | None] = mapped_column(
-        JSONB().with_variant(JSON(), "sqlite")
-    )
+    raw_payload: Mapped[dict | None] = mapped_column(JSONB().with_variant(JSON(), "sqlite"))
     normalization_revision: Mapped[str] = mapped_column(String(80))
     normalized_payload_hash: Mapped[str] = mapped_column(String(64))
     listing_status: Mapped[str] = mapped_column(String(30))

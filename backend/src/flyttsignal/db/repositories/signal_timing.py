@@ -122,7 +122,11 @@ class SignalTimingRepository:
         query = (
             select(SignalEvidence.signal_id, RentalListing)
             .join(Event, Event.id == SignalEvidence.event_id)
-            .join(RentalListing, RentalListing.raw_item_id == Event.raw_item_id)
+            .join(
+                RentalListing,
+                (RentalListing.raw_item_id == Event.raw_item_id)
+                & (RentalListing.is_historical == Event.is_historical),
+            )
             .where(SignalEvidence.signal_id.in_(signal_ids))
         )
         if as_of is None:
@@ -130,15 +134,12 @@ class SignalTimingRepository:
         else:
             query = query.where(
                 SignalEvidence.valid_from <= as_of,
-                (SignalEvidence.superseded_at.is_(None))
-                | (SignalEvidence.superseded_at > as_of),
+                (SignalEvidence.superseded_at.is_(None)) | (SignalEvidence.superseded_at > as_of),
             )
         grouped: dict[uuid.UUID, dict[uuid.UUID, RentalListing]] = defaultdict(dict)
         for signal_id, listing in self.session.execute(query):
             grouped[signal_id][listing.id] = listing
-        return {
-            signal_id: tuple(by_id.values()) for signal_id, by_id in grouped.items()
-        }
+        return {signal_id: tuple(by_id.values()) for signal_id, by_id in grouped.items()}
 
     def _effective_revisions(
         self, *, listing_ids: set[uuid.UUID], as_of: datetime | None

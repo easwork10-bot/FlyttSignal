@@ -175,6 +175,7 @@ async def execute_rental_listing_source(
                 select(RentalListing).where(
                     RentalListing.source_id == source.id,
                     RentalListing.source_item_id == source_item_id,
+                    RentalListing.is_historical.is_(False),
                 )
             )
             previous_listing_status = listing.status if listing is not None else None
@@ -308,7 +309,11 @@ async def execute_rental_listing_source(
                 else event_type_for(new_construction=effective_new_construction)
             )
             event = session.scalar(
-                select(Event).where(Event.raw_item_id == raw.id, Event.event_type == kind)
+                select(Event).where(
+                    Event.raw_item_id == raw.id,
+                    Event.event_type == kind,
+                    Event.is_historical.is_(False),
+                )
             )
             if event is None:
                 incoming = PropertyFingerprint(
@@ -325,6 +330,7 @@ async def execute_rental_listing_source(
                 occupied_by_same_source = select(RentalListing.property_id).where(
                     RentalListing.source_id == source.id,
                     RentalListing.source_item_id != source_item_id,
+                    RentalListing.is_historical.is_(False),
                 )
                 properties = list(
                     session.scalars(
@@ -523,6 +529,7 @@ async def execute_rental_listing_source(
                     .join(Event, SignalEvidence.event_id == Event.id)
                     .where(
                         Event.raw_item_id == raw.id,
+                        Event.is_historical.is_(False),
                         Event.id != event.id,
                         Event.event_type.in_(("RENTAL_LISTED", "NEW_BUILD_MOVE_IN")),
                         SignalEvidence.superseded_at.is_(None),

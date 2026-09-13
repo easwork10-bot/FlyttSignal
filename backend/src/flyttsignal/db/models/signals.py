@@ -66,7 +66,7 @@ class Signal(Base):
         cascade="all, delete-orphan"
     )
     outcomes: Mapped[list["SignalOutcome"]] = relationship(
-        back_populates="signal", cascade="all, delete-orphan"
+        back_populates="signal", passive_deletes="all"
     )
     superseded_by_signal: Mapped["Signal | None"] = relationship(
         remote_side="Signal.id", foreign_keys=[superseded_by_signal_id]
@@ -117,7 +117,9 @@ class SignalOutcome(Base):
         ),
     )
     id: Mapped[uuid.UUID] = uuid_pk()
-    signal_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("signals.id", ondelete="CASCADE"))
+    signal_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("signals.id", ondelete="SET NULL")
+    )
     listing_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("rental_listings.id", ondelete="SET NULL")
     )
@@ -134,7 +136,7 @@ class SignalOutcome(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
-    signal: Mapped[Signal] = relationship(back_populates="outcomes")
+    signal: Mapped[Signal | None] = relationship(back_populates="outcomes")
     listing: Mapped[RentalListing | None] = relationship()
     event: Mapped[Event | None] = relationship()
 

@@ -44,7 +44,11 @@ def _advertised_available_from():
         select(func.min(RentalListing.available_from))
         .select_from(SignalEvidence)
         .join(Event, Event.id == SignalEvidence.event_id)
-        .join(RentalListing, RentalListing.raw_item_id == Event.raw_item_id)
+        .join(
+            RentalListing,
+            (RentalListing.raw_item_id == Event.raw_item_id)
+            & (RentalListing.is_historical == Event.is_historical),
+        )
         .where(
             SignalEvidence.signal_id == Signal.id,
             SignalEvidence.superseded_at.is_(None),
@@ -94,7 +98,7 @@ class DashboardRepository:
             .where(
                 RentalListing.rental_project_id == RentalProject.id,
                 RentalListing.status == "ACTIVE",
-                RentalListing.data_mode == "live",
+                (RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False),
             )
             .correlate(RentalProject)
             .scalar_subquery()
@@ -121,7 +125,7 @@ class DashboardRepository:
                 .join(Property.address)
                 .where(
                     RentalListing.status == "ACTIVE",
-                    RentalListing.data_mode == "live",
+                    (RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False),
                     Address.city_id == city_id,
                 )
                 .group_by(
@@ -153,11 +157,15 @@ class DashboardRepository:
         data_mode: str | None = None,
         limit: int = 100,
     ) -> list[RentalListing]:
-        query = select(RentalListing).options(
-            selectinload(RentalListing.source),
-            selectinload(RentalListing.property)
-            .selectinload(Property.address)
-            .selectinload(Address.city),
+        query = (
+            select(RentalListing)
+            .where(RentalListing.is_historical.is_(False))
+            .options(
+                selectinload(RentalListing.source),
+                selectinload(RentalListing.property)
+                .selectinload(Property.address)
+                .selectinload(Address.city),
+            )
         )
         if status:
             query = query.where(RentalListing.status == status)
@@ -215,7 +223,7 @@ class DashboardRepository:
         query = (
             select(RentalListing, ListingMeasurement)
             .outerjoin(ListingMeasurement, measurement_join)
-            .where(RentalListing.data_mode == "live")
+            .where((RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False))
         )
         if source_key is not None:
             query = query.join(Source, RentalListing.source_id == Source.id).where(
@@ -255,36 +263,46 @@ class DashboardRepository:
         return exists(
             select(SignalEvidence.signal_id)
             .join(Event, Event.id == SignalEvidence.event_id)
-            .join(RentalListing, RentalListing.raw_item_id == Event.raw_item_id)
+            .join(
+                RentalListing,
+                (RentalListing.raw_item_id == Event.raw_item_id)
+                & (RentalListing.is_historical == Event.is_historical),
+            )
             .where(
                 SignalEvidence.signal_id == Signal.id,
                 SignalEvidence.superseded_at.is_(None),
-                RentalListing.data_mode == "live",
+                (RentalListing.data_mode == "live") & RentalListing.is_historical.is_(False),
             )
         )
 
     def signal_query(self, *, product_only: bool = True) -> Select:
-        query = select(Signal).where(Signal.current()).options(
-            selectinload(Signal.property).selectinload(Property.address).selectinload(Address.city),
-            selectinload(Signal.property)
-            .selectinload(Property.address)
-            .selectinload(Address.enrichments)
-            .selectinload(AddressEnrichment.source),
-            selectinload(Signal.property)
-            .selectinload(Property.address)
-            .selectinload(Address.enrichments)
-            .selectinload(AddressEnrichment.register_unit_link),
-            selectinload(Signal.evidence)
-            .selectinload(SignalEvidence.event)
-            .selectinload(Event.raw_item),
-            selectinload(Signal.evidence)
-            .selectinload(SignalEvidence.event)
-            .selectinload(Event.source),
-            with_loader_criteria(
-                SignalEvidence,
-                SignalEvidence.superseded_at.is_(None),
-                include_aliases=True,
-            ),
+        query = (
+            select(Signal)
+            .where(Signal.current())
+            .options(
+                selectinload(Signal.property)
+                .selectinload(Property.address)
+                .selectinload(Address.city),
+                selectinload(Signal.property)
+                .selectinload(Property.address)
+                .selectinload(Address.enrichments)
+                .selectinload(AddressEnrichment.source),
+                selectinload(Signal.property)
+                .selectinload(Property.address)
+                .selectinload(Address.enrichments)
+                .selectinload(AddressEnrichment.register_unit_link),
+                selectinload(Signal.evidence)
+                .selectinload(SignalEvidence.event)
+                .selectinload(Event.raw_item),
+                selectinload(Signal.evidence)
+                .selectinload(SignalEvidence.event)
+                .selectinload(Event.source),
+                with_loader_criteria(
+                    SignalEvidence,
+                    SignalEvidence.superseded_at.is_(None),
+                    include_aliases=True,
+                ),
+            )
         )
         if product_only:
             query = query.where(self._has_live_evidence())
@@ -486,9 +504,7 @@ class DashboardRepository:
             ),
         }[sort]
         items = list(
-            self.session.scalars(
-                query.order_by(*order_by).limit(limit).offset(offset)
-            ).unique()
+            self.session.scalars(query.order_by(*order_by).limit(limit).offset(offset)).unique()
         )
         return items, summary
 

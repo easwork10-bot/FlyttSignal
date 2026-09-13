@@ -36,6 +36,13 @@ No routine execution requires a new backup, snapshot or append-only framework. U
 
 ## Revision and time contracts
 
+Observed lifecycle outcomes have an optional signal link with ON DELETE SET NULL:
+discarding inference must not discard observations. Retained outcome-parent listings
+and events use `is_historical`; their facts and identities remain available for audit,
+but they do not participate in current listing selection, event reuse or new signal
+evidence. Partial unique indexes allow a fresh current observation for the same source
+identity without overwriting its retained historical context.
+
 Listing revisions are append-only, with a database trigger rejecting updates/deletes. Every revision preserves its own raw payload; later raw-item mutation cannot rewrite history. Identical observations do not create redundant content revisions. Relisting/removal transitions remain distinct.
 
 Typed revision columns are canonical; normalized hashes verify their content. A reconstructed revision establishes only what was provable at its reconstruction boundary. Never backdate it to first_seen_at or claim direct source observation from reconstructed state.

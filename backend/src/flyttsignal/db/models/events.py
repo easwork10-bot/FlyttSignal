@@ -1,7 +1,7 @@
 import uuid
 from datetime import date, datetime
 
-from sqlalchemy import JSON, Date, Enum, ForeignKey, String, UniqueConstraint
+from sqlalchemy import JSON, Boolean, Date, Enum, ForeignKey, Index, String, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -12,7 +12,17 @@ from flyttsignal.domains.events.models import EventType
 
 class Event(Base):
     __tablename__ = "events"
-    __table_args__ = (UniqueConstraint("raw_item_id", "event_type"),)
+    __table_args__ = (
+        Index(
+            "uq_current_event_raw_type",
+            "raw_item_id",
+            "event_type",
+            unique=True,
+            postgresql_where=text("NOT is_historical"),
+            sqlite_where=text("NOT is_historical"),
+        ),
+    )
+    is_historical: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
     id: Mapped[uuid.UUID] = uuid_pk()
     property_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("properties.id"))
     source_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("sources.id"))
